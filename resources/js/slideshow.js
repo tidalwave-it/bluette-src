@@ -121,7 +121,8 @@ $(document).ready(function()
                 .css(
                   {
                    '-webkit-transform' : 'rotate(' + angle + ')',
-                   '-moz-transform'    : 'rotate(' + angle + ')'
+                   '-moz-transform'    : 'rotate(' + angle + ')',
+                   'display'           : 'none'
                   })
                 .appendTo($("#thumbnails"))
                 .click(function()
@@ -139,7 +140,11 @@ $(document).ready(function()
                     // END FIXME
                     //scheduleNextSlide(0);
                     closeLightBox();
-                  });
+                  })
+                .load(function()
+                   {
+                     $(this).fadeIn();
+                   });
                   
             index++;
           });
