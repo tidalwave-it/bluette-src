@@ -96,7 +96,7 @@ $(document).ready(function()
           }
       }
 
-    var parseCatalog = function(xml)
+    var parseCatalog = function (xml)
       {
         var index = 0;
 
@@ -144,7 +144,7 @@ $(document).ready(function()
             currentContainer = activeContainer;
             activeContainer = 3 - activeContainer;
             currentPhotoIndex = (currentPhotoIndex + direction) % photos.length;
-            showPhoto(currentPhotoIndex, currentContainer, activeContainer);
+            showCurrentPhoto();
           }
       };
 
@@ -193,9 +193,9 @@ $(document).ready(function()
           });
       }
 
-    var showPhoto = function (index, currentContainer, activeContainer) 
+    var showCurrentPhoto = function() 
       {
-        var photo = photos[index];
+        var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var loadedSize = sizes[0];
 
@@ -228,7 +228,7 @@ $(document).ready(function()
                         .attr('width',               this.width)
                         .attr('height',              this.height);
 
-                showPhoto(index, currentContainer, activeContainer);
+                showCurrentPhoto();
               });
           }
 
@@ -258,14 +258,8 @@ $(document).ready(function()
                 setTimeout(function() 
                   {
                     animating = false;
-                    var caption = "" + (index + 1) + " / " + photos.length;
 
-                    if (photo.caption != null)
-                      {
-                        caption = caption + " - " + photo.caption;
-                      }
-
-                    $("#caption" + activeContainer).text(caption);
+                    $("#caption" + activeContainer).text(getCurrentCaption());
                     $("#caption" + activeContainer).fadeIn();
 
                     if (playing)
@@ -276,6 +270,19 @@ $(document).ready(function()
               });
           }
       };
+
+    var getCurrentCaption = function()
+      {
+        var photo = photos[currentPhotoIndex];
+        var caption = "" + (currentPhotoIndex + 1) + " / " + photos.length;
+
+        if (photo.caption != null)
+          {
+            caption = caption + " - " + photo.caption;
+          }
+
+        return caption;
+      }
 
     var scheduleNextSlide = function (delay)
       {
@@ -305,3 +312,4 @@ $(document).ready(function()
     $(window).resize(resize); 
     loadCatalog();
   });
+
