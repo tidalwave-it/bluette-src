@@ -218,17 +218,15 @@ $(document).ready(function()
             height : availHeight - border * 2 
           });
 
-        var width  = size.width;
-        var height = size.height;
-        var left = Math.round((availWidth  - border * 2 - width)  / 2);
-        var top  = Math.round((availHeight - border * 2 - height) / 2);
+        var left = Math.round((availWidth  - border * 2 - size.width)  / 2);
+        var top  = Math.round((availHeight - border * 2 - size.height) / 2);
 
         $("#image" + container).css(
           { 
             "left"         : left, 
             "top"          : top, 
-            "width"        : width, 
-            "height"       : height, 
+            "width"        : size.width, 
+            "height"       : size.height, 
             "border-width" : border 
           });
 
@@ -236,18 +234,18 @@ $(document).ready(function()
           { 
             "left"         : left + border, 
             "top"          : top + border, 
-            "width"        : width,
-            "height"       : height 
+            "width"        : size.width,
+            "height"       : size.height 
           });
 
         $("#caption" + container).css(
           { 
-            //"left"         : left, 
-            //"width"        : width + 2 * border, 
+            //"left"         : size.left, 
+            //"width"        : size.width + 2 * border, 
             "left"         : 0, 
             "width"        : availWidth,
-            "top"          : top + height + border * 2 + border, 
-            //var captionFontSize = Math.max(Math.round(Math.max(width, height) * 27 / 1280), 6)
+            "top"          : top + size.height + border * 2 + border, 
+            //var captionFontSize = Math.max(Math.round(Math.max(size.width, size.height) * 27 / 1280), 6)
             "font-size"    : Math.max(Math.round(availWidth * 25 / 1280), 6)
           });
       }  
