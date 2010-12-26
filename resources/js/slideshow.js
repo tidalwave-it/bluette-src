@@ -41,6 +41,39 @@ $(document).ready(function()
             changePhoto(+1);
           });
 
+        $("#navigationCloseWidget").click(function()
+          {
+            $("#lightbox").fadeOut(new function()
+              {
+                setTimeout(function() 
+                  {
+                    var photo = photos[currentPhotoIndex];
+                    location.href = baseUrl + "#" + photo.id;                    
+                    $("#slideshow").fadeIn();
+                  }, 500);
+              });
+         });
+
+        $("#navigationLightBoxWidget").click(function()
+          {
+            pause();
+            $("#slideshow").fadeOut(new function()
+              {
+                setTimeout(function() 
+                  {
+                    location.href = baseUrl + "#lightbox";
+                    
+                    $("#lightbox").fadeIn(new function()
+                      {
+                        setTimeout(function() 
+                          {
+                            // TODO: initialize lightbox
+                          }, 500);
+                      });
+                  }, 500);
+              });
+          });
+
         $("#navigationHomeWidget").click(function()
           {
             $("#slideshow").fadeOut(new function()
@@ -54,33 +87,53 @@ $(document).ready(function()
 
         $("#navigationPlayWidget").click(function()
           {
-            if (!playing)
-              {
-                playing = true;
-                setWidgetsVisibility();
-                scheduleNextSlide(0);
-              }
+            play();
           });
 
         $("#navigationPauseWidget").click(function()
           {
-            if (playing)
-              {
-                playing = false;
-                setWidgetsVisibility();
-                $("#waitingWidget").fadeOut();
-
-                if (schedulerTimer != null)
-                  {
-                    cancelTimer(schedulerTimer);
-                    schedulerTimer = null;
-                  }
-              }
+            pause();
           });
 
         setWidgetsVisibility();
       }
 
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var play = function()
+      {
+        if (!playing)
+          {
+            playing = true;
+            setWidgetsVisibility();
+            scheduleNextSlide(0);
+          }
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var pause = function()
+      {
+        if (playing)
+          {
+            playing = false;
+            setWidgetsVisibility();
+            $("#waitingWidget").fadeOut();
+
+            if (schedulerTimer != null)
+              {
+                cancelTimer(schedulerTimer);
+                schedulerTimer = null;
+              }
+          }
+      }
+      
     /*******************************************************************************************************************************
      *
      *
