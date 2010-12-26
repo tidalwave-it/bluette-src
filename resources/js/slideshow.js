@@ -76,13 +76,7 @@ $(document).ready(function()
 
         $("#navigationHomeWidget").click(function()
           {
-            $("#slideshow").fadeOut(new function()
-              {
-                setTimeout(function() 
-                  {
-                    location.href = home; 
-                  }, 500);
-              });
+            goHome();
           });
 
         $("#navigationPlayWidget").click(function()
@@ -98,6 +92,22 @@ $(document).ready(function()
         setWidgetsVisibility();
       }
 
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var goHome = function()
+      {
+        $("#slideshow").fadeOut(new function()
+          {
+            setTimeout(function() 
+              {
+                location.href = home; 
+              }, 500);
+          });
+      }
+      
     /*******************************************************************************************************************************
      *
      *
@@ -194,6 +204,7 @@ $(document).ready(function()
           });
 
         scheduleNextSlide(0);
+        $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
       }
 
     /*******************************************************************************************************************************
