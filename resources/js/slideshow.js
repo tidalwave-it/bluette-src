@@ -110,9 +110,10 @@ $(document).ready(function()
         
         $(photos).each(function()
           {
-            var range = 5;
-            var angle = Math.random() * range * 2 - range + 'deg';    
+//            var range = 5;
+//            var angle = Math.random() * range * 2 - range + 'deg';    
             var theIndex = index;
+            
             $(document.createElement("img"))
                 .attr(
                   {
@@ -120,8 +121,8 @@ $(document).ready(function()
                   })
                 .css(
                   {
-                   '-webkit-transform' : 'rotate(' + angle + ')',
-                   '-moz-transform'    : 'rotate(' + angle + ')',
+//                   '-webkit-transform' : 'rotate(' + angle + ')',
+//                   '-moz-transform'    : 'rotate(' + angle + ')',
                    'display'           : 'none'
                   })
                 .appendTo($("#thumbnails"))
