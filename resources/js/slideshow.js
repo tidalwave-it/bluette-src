@@ -19,7 +19,7 @@ $(document).ready(function()
     var currentPhotoIndex = -1;
     var animating = false;
     var baseUrl = location.href.replace(/#.*/, "");
-    var urlId = location.href.replace(/.*#/, "");
+    var initialPhotoId = location.href.replace(/.*#/, "");
     var currentZindex = -1;
     var playing = true;
     var schedulerTimer = null;
@@ -43,7 +43,13 @@ $(document).ready(function()
 
         $("#navigationHomeWidget").click(function()
           {
-            location.href = home; 
+            $("#slideshow").fadeOut(new function()
+              {
+                setTimeout(function() 
+                  {
+                    location.href = home; 
+                  }, 500);
+              });
           });
 
         $("#navigationPlayWidget").click(function()
@@ -126,7 +132,7 @@ $(document).ready(function()
             var info    = $(this).attr("caption");
             photos.push({ "name" : name, "caption" : caption, "info" : info });
 
-            if (name == urlId)
+            if (name == initialPhotoId)
               {
                 currentPhotoIndex = index - 1;
               }
