@@ -63,7 +63,12 @@ html, body
   {
     display:         none;
   }
-  
+
+#thumbnails
+  { 
+    overflow:        auto;
+  }
+
 #brand
   {
     position:        absolute; 
@@ -180,6 +185,18 @@ html, body
     width:           20px;
     height:          20px;
     background:      url(/media/graphics/Closed.png) no-repeat center;
+  }
+
+#lightbox #thumbnails img
+  {
+    padding:         4px 4px 4px 4px;
+    background:      #444444;
+    border:          1px solid #444444;
+    box-shadow:      0px 2px 15px #333;
+    -moz-box-shadow: 0px 2px 15px #333;
+    -webkit-box-shadow: 0px 2px 15px #333;
+    position:        relative;
+    margin:          15px 0 0 15px;
   }
 
 #menu

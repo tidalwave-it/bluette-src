@@ -9,7 +9,7 @@ var photos = new Array();
 var availWidth  = 1000;
 var availHeight = 664;
 var border = 10;
-var sizes = [1920, 1280, 800];
+var sizes = [1920, 1280, 800, 400, 200];
 var home = "/blog/";
 
 $(document).ready(function() 
@@ -23,6 +23,7 @@ $(document).ready(function()
     var currentZindex = -1;
     var playing = true;
     var schedulerTimer = null;
+    var thumbnailsLoaded = false;
 
     /*******************************************************************************************************************************
      *
@@ -43,35 +44,12 @@ $(document).ready(function()
 
         $("#navigationCloseWidget").click(function()
           {
-            $("#lightbox").fadeOut(new function()
-              {
-                setTimeout(function() 
-                  {
-                    var photo = photos[currentPhotoIndex];
-                    location.href = baseUrl + "#" + photo.id;                    
-                    $("#slideshow").fadeIn();
-                  }, 500);
-              });
-         });
+            closeLightBox();
+          });
 
         $("#navigationLightBoxWidget").click(function()
           {
-            pause();
-            $("#slideshow").fadeOut(new function()
-              {
-                setTimeout(function() 
-                  {
-                    location.href = baseUrl + "#lightbox";
-                    
-                    $("#lightbox").fadeIn(new function()
-                      {
-                        setTimeout(function() 
-                          {
-                            // TODO: initialize lightbox
-                          }, 500);
-                      });
-                  }, 500);
-              });
+            openLightBox();
           });
 
         $("#navigationHomeWidget").click(function()
@@ -90,6 +68,95 @@ $(document).ready(function()
           });
 
         setWidgetsVisibility();
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var openLightBox = function()
+      {
+        pause();
+        $("#slideshow").fadeOut(new function()
+          {
+            setTimeout(function() 
+              {
+                location.href = baseUrl + "#lightbox";
+
+                $("#lightbox").fadeIn(new function()
+                  {
+                    if (!thumbnailsLoaded)
+                      {
+                        setTimeout(function() 
+                          {
+                            loadThumbnails();
+                          }, 500);
+                      }
+                  });
+              }, 500);
+          });
+      }
+
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var loadThumbnails = function()
+      {
+        thumbnailsLoaded = true;
+        var index = 0;
+        
+        $(photos).each(function()
+          {
+            var range = 5;
+            var angle = Math.random() * range * 2 - range + 'deg';    
+            var theIndex = index;
+            $(document.createElement("img"))
+                .attr(
+                  {
+                    src: getPhotoUrl(this, '200')
+                  })
+                .css(
+                  {
+                   '-webkit-transform' : 'rotate(' + angle + ')',
+                   '-moz-transform'    : 'rotate(' + angle + ')'
+                  })
+                .appendTo($("#thumbnails"))
+                .click(function()
+                  {
+                    if (currentPhotoIndex != theIndex)
+                      {
+                        // FIXME: reset the slideshow so the previous photo is not shown
+                        // FIXME: if the new photo is not ready, show again the initial waiting widget
+                        currentPhotoIndex = theIndex;
+                      }
+                      
+                    showCurrentPhoto();
+                    closeLightBox();
+                  });
+                  
+            index++;
+          });
+      }
+    
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var closeLightBox = function()
+      {
+        $("#lightbox").fadeOut(new function()
+          {
+            setTimeout(function() 
+              {
+                var photo = photos[currentPhotoIndex];
+                location.href = baseUrl + "#" + photo.id;                    
+                $("#slideshow").fadeIn();
+              }, 500);
+          });
       }
 
     /*******************************************************************************************************************************
@@ -169,9 +236,9 @@ $(document).ready(function()
         availHeight = Math.round($(window).height() * 0.85);
         border = Math.max(Math.round(availWidth * 10 / 1920), 2);
 
-        $("#divimage1").css({ "width"  : availWidth, "height" : availHeight });
-        $("#divimage2").css({ "width"  : availWidth, "height" : availHeight });
-        $("#page").css({ "margin-top" : -Math.round(availHeight / 2) });
+        $("#divimage1").css({"width"  : availWidth, "height" : availHeight});
+        $("#divimage2").css({"width"  : availWidth, "height" : availHeight});
+        $("#page").css({"margin-top" : -Math.round(availHeight / 2)});
 
         if (currentPhotoIndex >= 0)
           {
@@ -193,7 +260,7 @@ $(document).ready(function()
             var name    = $(this).attr("src").replace(/\..*/, "");
             var caption = $(this).attr("title");
             var info    = $(this).attr("caption");
-            photos.push({ "name" : name, "caption" : caption, "info" : info });
+            photos.push({"name" : name, "caption" : caption, "info" : info});
 
             if (name == initialPhotoId)
               {
@@ -230,7 +297,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var hideInitialWaitingWidget = function()
       {
-        $("#imageOverlay").css({ "background" : "none" });
+        $("#imageOverlay").css({"background" : "none"});
       }
 
     /*******************************************************************************************************************************
@@ -468,7 +535,7 @@ $(document).ready(function()
     var showWidget = function (widget, status)
       {
         //$(widget).css({ "display" : status ? "block" : "none" });
-        $(widget).css({ "display" : status ? "inline" : "none" });
+        $(widget).css({"display" : status ? "inline" : "none"});
       }
 
     /*******************************************************************************************************************************
