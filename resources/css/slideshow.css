@@ -1,0 +1,204 @@
+@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);
+@import url(http://fonts.googleapis.com/css?family=Tangerine);
+
+ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input
+  {
+    margin:          0; 
+    padding:         0;
+  }
+
+.break 
+  { 
+    clear:           both; 
+  }
+
+html, body 
+  {
+    height:          100%;
+    margin:          0px; 
+    padding:         0px;
+    background:      #000000;
+    overflow:        hidden;
+  }
+
+#page
+  {
+    position:        absolute;
+    top:             50%;
+    margin-top:      -332px; /* half #content height */
+    left:            0px;
+    width:           100%;
+    z-index:         10; 
+  }
+
+#caption1, #caption2
+  {
+/*    font-family:     'Josefin Sans';*/
+    font-family:     'Tangerine';
+    position:        absolute;
+    color:           #888888;
+    z-index:         10; 
+    text-align:      center;
+    white-space:     nowrap;
+    text-overflow:   ellipsis;
+    overflow:        hidden;
+  }
+
+#content
+  { 
+    width:           100%;
+    height:          100%;
+    text-align:      center;
+    margin-left:     auto;  
+    margin-right:    auto;
+    z-index:         10; 
+  }
+
+#brand
+  {
+    position:        absolute; 
+    width:           1000px; 
+    height:          150px; 
+    margin:          0px auto; 
+    z-index:         10; 
+    background:      url(/media/graphics/StoppingDown_Transparent.png) no-repeat right
+  }
+
+#waiting
+  {
+    z-index:         10; 
+    background:      url(/media/graphics/big-roller.gif) no-repeat right;
+    position:        absolute;
+    xxxwidth:           1000px; 
+    height:          664px; 
+    xxxmargin:          0px auto;
+  }
+
+#header
+  {
+    width:           1200px;
+    text-align:      center;
+    margin:          0;
+  }
+
+#divimage1, #divimage2
+  { 
+    width:           100%;
+    position:        absolute;
+    background:      #000000;
+  }
+
+#image1, #image2
+  { 
+    position:        absolute;
+    border:          solid;
+    border-width:    0px;
+    border-color:    #444444;
+  }
+
+#imageOverlay
+  {
+    position:        absolute;
+    z-index:         15;
+    background:      url(/media/graphics/big-roller.gif) no-repeat center;
+  }
+
+#waitingWidget, #loadingWidget
+  {
+    position:        absolute;
+    top:             8px;
+    right:           8px;
+    width:           32px;
+    height:          32px;
+    text-align:      right;
+    display:         none;
+  }
+
+#loadingWidget
+  {
+    background:      url(/media/graphics/linear-spinner.gif) no-repeat right;
+  }
+
+#waitingWidget
+  {
+    background:      url(/media/graphics/Clock.png) no-repeat right;
+  }
+
+#navigationWidgets
+  {
+    height:          20px;
+    margin-top:      -20px;
+  }
+
+#navigationPreviousWidget, #navigationNextWidget, #navigationHomeWidget, #navigationPlayWidget, #navigationPauseWidget
+  {
+    display:         none;
+    width:           20px;
+    height:          20px;
+  }
+
+#navigationPreviousWidget
+  {
+    background:      url(/media/graphics/Reverse.png) no-repeat center;
+  }
+
+#navigationNextWidget
+  {
+    background:      url(/media/graphics/Forward.png) no-repeat center;
+  }
+
+#navigationHomeWidget
+  {
+    background:      url(/media/graphics/Home.png) no-repeat center;
+  }
+
+#navigationPlayWidget
+  {
+    background:      url(/media/graphics/Play.png) no-repeat center;
+  }
+
+#navigationPauseWidget
+  {
+    background:      url(/media/graphics/Pause.png) no-repeat center;
+  }
+
+#menu
+  {
+    position:        absolute;
+    bottom:          10px; 
+    width:           1000px; 
+    z-index:         15;
+    text-align:      right; 
+  }
+
+#copyright
+  {
+    position:        relative;
+    top:             -480px; 
+    width:           1000px; 
+    height:          100px; 
+    margin:          0px auto;
+    z-index:         15;
+    text-align:      left; 
+    font-size:       75%;
+    font-family:     sans-serif;
+    font-weight:     demi-bold;
+    color:           #aaaaaa;
+    visibility:      hidden;
+  }
+
+#copyright span
+  {
+    margin-left:     20px;
+  }
+
+#menu a:link, #menu a:visited, #menu a:active, #menu a:hover
+  {
+    margin-right:    10px;
+    color:           #aaaaaa;
+    text-decoration: none;
+    font-size:       130%;
+    font-family:     sans-serif;
+    font-weight:     bold;
+  }
+
