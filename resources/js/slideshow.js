@@ -133,7 +133,11 @@ $(document).ready(function()
                         currentPhotoIndex = theIndex;
                       }
                       
+                    // FIXME: use the scheduler instead
                     showCurrentPhoto();
+                    location.href = baseUrl + "#" + photos[currentPhotoIndex].id;
+                    // END FIXME
+                    //scheduleNextSlide(0);
                     closeLightBox();
                   });
                   
