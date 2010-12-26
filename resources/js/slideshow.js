@@ -131,10 +131,7 @@ $(document).ready(function()
 
     var hideInitialWaitingWidget = function()
       {
-        $("#imageOverlay").css(
-          {
-            "background" : "none"
-          });
+        $("#imageOverlay").css({ "background" : "none" });
       }
 
     var changePhoto = function (direction) 
@@ -182,14 +179,15 @@ $(document).ready(function()
             "height"       : height 
           });
 
-        //var captionFontSize = Math.max(Math.round(Math.max(width, height) * 27 / 1280), 6);
-        var captionFontSize = Math.max(Math.round(availWidth * 25 / 1280), 6);
         $("#caption" + container).css(
           { 
-            "left"         : left, 
+            //"left"         : left, 
+            //"width"        : width + 2 * border, 
+            "left"         : 0, 
+            "width"        : availWidth,
             "top"          : top + height + border * 2 + border, 
-            "width"        : width + 2 * border, 
-            "font-size"    : captionFontSize 
+            //var captionFontSize = Math.max(Math.round(Math.max(width, height) * 27 / 1280), 6)
+            "font-size"    : Math.max(Math.round(availWidth * 25 / 1280), 6)
           });
       }
 
@@ -250,7 +248,6 @@ $(document).ready(function()
               });
 
             showWidget("#loadingWidget", false);
-//            showWidget("#waitingWidget", true);
             $("#caption" + currentContainer).fadeOut();
             $("#divimage" + currentContainer).fadeOut(function() 
               {
@@ -259,8 +256,7 @@ $(document).ready(function()
                   {
                     animating = false;
 
-                    $("#caption" + activeContainer).text(getCurrentCaption());
-                    $("#caption" + activeContainer).fadeIn();
+                    $("#caption" + activeContainer).text(getCurrentCaption()).fadeIn();
 
                     if (playing)
                       {
