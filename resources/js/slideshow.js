@@ -145,20 +145,36 @@ $(document).ready(function()
           }
       };
 
-    var resizePhoto = function (photo, container)
+    var computeBestSize = function (photo, container)
       {
-        var width  = availWidth - border * 2;
+        var width  = container.width - border * 2;
         var scale  = Math.min(width / photo.width, 1);
 
-        if (photo.height * scale > availHeight)
+        if (photo.height * scale > container.height)
           {
-            height = availHeight - border * 2;
+            height = container.height - border * 2;
             scale  = Math.min(height / photo.height, 1);
           }
 
-        width  = Math.round(photo.width  * scale);
-        height = Math.round(photo.height * scale);
+        size = 
+          { 
+            width  : Math.round(photo.width  * scale),
+            height : Math.round(photo.height * scale) 
+          };
+          
+        return size;
+      }
 
+    var resizePhoto = function (photo, container)
+      {
+        var size = computeBestSize(photo, 
+          { 
+            width  : availWidth - border * 2,
+            height : availHeight - border * 2 
+          });
+
+        var width  = size.width;
+        var height = size.height;
         var left = Math.round((availWidth  - border * 2 - width)  / 2);
         var top  = Math.round((availHeight - border * 2 - height) / 2);
 
