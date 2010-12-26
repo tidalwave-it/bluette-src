@@ -250,17 +250,25 @@ $(document).ready(function()
             //var captionFontSize = Math.max(Math.round(Math.max(width, height) * 27 / 1280), 6)
             "font-size"    : Math.max(Math.round(availWidth * 25 / 1280), 6)
           });
-      }
+      }  
 
     /*******************************************************************************************************************************
      *
      *
      *
      ******************************************************************************************************************************/
-    var showCurrentPhoto = function() 
+    var getPhotoUrl = function (photo, size)
       {
-        var photo = photos[currentPhotoIndex];
-        var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
+        return photoPrefix + size + "/" + photo.name + ".jpg";
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var computeMediaSize = function (neededSize)
+      {
         var loadedSize = sizes[0];
 
         $(sizes).each(function()
@@ -271,26 +279,38 @@ $(document).ready(function()
               }
           });
 
+        return loadedSize;
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     *
+     *
+     ******************************************************************************************************************************/
+    var showCurrentPhoto = function() 
+      {
+        var photo = photos[currentPhotoIndex];
+        var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
+        var mediaSize = computeMediaSize(neededSize);
+
 //console.log("neededSize : " + neededSize + " loadedSize: " + loadedSize);
-        if (!$(photo).attr('loaded' + loadedSize))
+        if (!$(photo).attr('loaded' + mediaSize))
           {
             showWidget("#loadingWidget", true);
-            var id = photo.name;
-            $(photo).attr('id', id);
+            $(photo).attr('id', photo.name);
 
             $(sizes).each(function()
               {
-                var url = photoPrefix + this + "/" + photo.name + ".jpg";
-                $(photo).attr('url' + this, url);
+                $(photo).attr('url' + this, getPhotoUrl(photo, this));
               });
 
 //console.log("Preloading " + loadedSize);
 
-            $('<img/>').attr('src', $(photo).attr('url' + loadedSize)).load(function()
+            $('<img/>').attr('src', $(photo).attr('url' + mediaSize)).load(function()
               {
-                $(photo).attr('loaded' + loadedSize, true)
-                        .attr('width',               this.width)
-                        .attr('height',              this.height);
+                $(photo).attr('loaded' + mediaSize, true)
+                        .attr('width',              this.width)
+                        .attr('height',             this.height);
 
                 showCurrentPhoto();
               });
@@ -303,7 +323,7 @@ $(document).ready(function()
             animating = true;
             currentZindex--;
 
-            var url = $(photo).attr('url' + loadedSize);
+            var url = $(photo).attr('url' + mediaSize);
 //console.log("Using " + url);
             $("#image" + activeContainer).attr('src', url);
 
