@@ -14,7 +14,6 @@ var home = "/blog/";
 
 $(document).ready(function() 
   {
-    var interval = null;
     var activeContainer = 1;	
     var currentContainer = 2;	
     var currentPhotoIndex = -1;
