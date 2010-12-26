@@ -69,9 +69,7 @@ html, body
     z-index:         10; 
     background:      url(/media/graphics/big-roller.gif) no-repeat right;
     position:        absolute;
-    xxxwidth:           1000px; 
     height:          664px; 
-    xxxmargin:          0px auto;
   }
 
 #header
@@ -182,7 +180,7 @@ html, body
     text-align:      left; 
     font-size:       75%;
     font-family:     sans-serif;
-    font-weight:     demi-bold;
+    font-weight:     bold;
     color:           #aaaaaa;
     visibility:      hidden;
   }
