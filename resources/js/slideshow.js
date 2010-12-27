@@ -1,5 +1,29 @@
+/***********************************************************************************************************************
+ *
+ * bluette - open source media presentation
+ * ========================================
+ *
+ * Copyright (C) 2010 by Fabrizio Giudici
+ * Project home page: http://bluette.kenai.com
+ *
+ ***********************************************************************************************************************
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ *
+ ***********************************************************************************************************************
+ *
+ * $Id: $
+ *
+ **********************************************************************************************************************/
+
 /*
- * Written by Fabrizio Giudici.
  * Inspired from code by Marco Kuiper (http://www.marcofolio.net/)
  */
 
@@ -23,7 +47,7 @@ $(document).ready(function()
     var baseUrl = location.href.replace(/#.*/, "");
     var initialPhotoId = location.href.replace(/.*#/, "");
     var currentZindex = -1;
-    var playing = true;
+    var playing = initialPhotoId != "lightbox";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
 
@@ -267,8 +291,15 @@ $(document).ready(function()
             index++; 
           });
 
-        scheduleNextSlide(0);
-        $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
+        if (initialPhotoId === "lightbox")
+          {
+            openLightBox();
+          }
+        else
+          {
+            scheduleNextSlide(0);
+            $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
+          }
       }
 
     /*******************************************************************************************************************************
