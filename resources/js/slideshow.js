@@ -107,7 +107,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var loadThumbnails = function()
       {
-        var mediaSize = availWidth / 8;
+        var mediaSize = availWidth / 10;
         thumbnailsLoaded = true;
         var index = 0;
         
