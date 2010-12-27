@@ -221,7 +221,7 @@ $(document).ready(function()
 
             if (schedulerTimer != null)
               {
-                cancelTimer(schedulerTimer);
+                clearTimeout(schedulerTimer);
                 schedulerTimer = null;
               }
           }
@@ -535,7 +535,7 @@ $(document).ready(function()
 
         schedulerTimer = setTimeout(function() 
           { 
-            if (playing) // sometimes the timer doesn't get cancelled
+            if (playing) // defensive
               {
                 showWidget("#waitingWidget", false);
                 changePhoto(+1);
