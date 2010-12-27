@@ -37,6 +37,7 @@ var availHeight = 664;
 var border = 10;
 var sizes = [1920, 1280, 800, 400, 200];
 var home = "/blog/";
+var thumbnailsPerRow = 10;
 
 $(document).ready(function() 
   {
@@ -112,7 +113,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var loadThumbnails = function()
       {
-        var mediaSize = availWidth / 10;
+        var mediaSize = availWidth / thumbnailsPerRow;
         thumbnailsLoaded = true;
         var index = 0;
         
