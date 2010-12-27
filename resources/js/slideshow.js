@@ -175,9 +175,15 @@ $(document).ready(function()
           {
             setTimeout(function() 
               {
+                if (currentPhotoIndex < 0)
+                  {
+                    currentPhotoIndex = 0;
+                  }
+                  
                 var photo = photos[currentPhotoIndex];
                 location.href = baseUrl + "#" + photo.id;                    
-                $("#slideshow").fadeIn();
+                scheduleNextSlide(0);
+                $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
               }, 500);
           });
       }
@@ -549,11 +555,8 @@ $(document).ready(function()
 
         schedulerTimer = setTimeout(function() 
           { 
-            if (playing) // defensive   
-              {
-                showWidget("#waitingWidget", false);
-                changePhoto(+1);
-              }
+            showWidget("#waitingWidget", false);
+            changePhoto(+1);
           }, delay);
       }
 
