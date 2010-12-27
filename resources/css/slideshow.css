@@ -21,6 +21,11 @@ html, body
     overflow:        hidden;
   }
 
+body
+  {
+    background:      url(/media/graphics/dgrey013.gif) repeat;
+  }
+
 #page
   {
     position:        absolute;
@@ -98,7 +103,8 @@ html, body
   { 
     width:           100%;
     position:        absolute;
-    background:      #000000;
+    /* background:      #000000; */
+    background:      url(/media/graphics/dgrey013.gif) repeat;
   }
 
 #image1, #image2
