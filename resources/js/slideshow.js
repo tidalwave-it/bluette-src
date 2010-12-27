@@ -113,48 +113,46 @@ $(document).ready(function()
         
         $(photos).each(function()
           {
-//            var range = 5;
-//            var angle = Math.random() * range * 2 - range + 'deg';    
+            var range = 5;
+            var angle = Math.random() * range * 2 - range + 'deg';    
             var theIndex = index;
             var url = getPhotoUrl(this, computeMediaSize(mediaSize));
             
-            $('<img/>').attr('src', url).load(function()
-              {
-                var size = computeBestSize(this, 
-                  { 
-                    width  : mediaSize,
-                    height : mediaSize 
-                  });
-                var img = $(document.createElement("img"))
-                    .attr('src', url)
-                    .attr('width', size.width)
-                    .attr('height', size.height)
-                    .css(
-                      {
-    //                   '-webkit-transform' : 'rotate(' + angle + ')',
-    //                   '-moz-transform'    : 'rotate(' + angle + ')',
-                       'display'           : 'none'
-                      })
-                    .click(function()
-                      {
-                        if (currentPhotoIndex != theIndex)
+            $('<img/>').attr('src', url)
+                       .css(
                           {
-                            // FIXME: reset the slideshow so the previous photo is not shown
-                            // FIXME: if the new photo is not ready, show again the initial waiting widget
-                            currentPhotoIndex = theIndex;
-                          }
+                           '-webkit-transform' : 'rotate(' + angle + ')',
+                           '-moz-transform'    : 'rotate(' + angle + ')',
+                           'display'           : 'none'
+                          })
+                       .appendTo($("#thumbnails"))
+                       .click(function()
+                         {
+                           if (currentPhotoIndex != theIndex)
+                             {
+                               // FIXME: reset the slideshow so the previous photo is not shown
+                               // FIXME: if the new photo is not ready, show again the initial waiting widget
+                               currentPhotoIndex = theIndex;
+                             }
 
-                        // FIXME: use the scheduler instead
-                        showCurrentPhoto();
-                        location.href = baseUrl + "#" + photos[currentPhotoIndex].id;
-                        // END FIXME
-                        //scheduleNextSlide(0);
-                        closeLightBox();
-                      })
-                    .appendTo($("#thumbnails"));
-                  $(img).fadeIn();
-              });              
-                  
+                           // FIXME: use the scheduler instead
+                           showCurrentPhoto();
+                           location.href = baseUrl + "#" + photos[currentPhotoIndex].id;
+                           // END FIXME
+                           //scheduleNextSlide(0);
+                           closeLightBox();
+                         })
+                       .load(function()
+                         {
+                           var size = computeBestSize(this, 
+                             { 
+                               width  : mediaSize,
+                               height : mediaSize 
+                             });
+                             
+                           $(this).attr('width', size.width).attr('height', size.height).fadeIn();
+                         });              
+
             index++;
           });
       }
