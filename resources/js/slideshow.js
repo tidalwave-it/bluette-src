@@ -44,30 +44,11 @@ $(document).ready(function()
             changePhoto(+1);
           });
 
-        $("#navigationCloseWidget").click(function()
-          {
-            closeLightBox();
-          });
-
-        $("#navigationLightBoxWidget").click(function()
-          {
-            openLightBox();
-          });
-
-        $("#navigationHomeWidget").click(function()
-          {
-            goHome();
-          });
-
-        $("#navigationPlayWidget").click(function()
-          {
-            play();
-          });
-
-        $("#navigationPauseWidget").click(function()
-          {
-            pause();
-          });
+        $("#navigationCloseWidget").click(closeLightBox);
+        $("#navigationLightBoxWidget").click(openLightBox);
+        $("#navigationHomeWidget").click(goHome);
+        $("#navigationPlayWidget").click(play);
+        $("#navigationPauseWidget").click(pause);
 
         setWidgetsVisibility();
       }
@@ -535,7 +516,7 @@ $(document).ready(function()
 
         schedulerTimer = setTimeout(function() 
           { 
-            if (playing) // defensive
+            if (playing) // defensive   
               {
                 showWidget("#waitingWidget", false);
                 changePhoto(+1);
