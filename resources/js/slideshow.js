@@ -132,19 +132,7 @@ $(document).ready(function()
                        .appendTo($("#thumbnails"))
                        .click(function()
                          {
-                           if (currentPhotoIndex != theIndex)
-                             {
-                               // FIXME: reset the slideshow so the previous photo is not shown
-                               // FIXME: if the new photo is not ready, show again the initial waiting widget
-                               currentPhotoIndex = theIndex;
-                             }
-
-                           // FIXME: use the scheduler instead
-                           showCurrentPhoto();
-                           updateUrl();
-                           // END FIXME
-                           //scheduleNextSlide(0);
-                           closeLightBox();
+                           goToPhoto(theIndex);
                          })
                        .load(function()
                          {
@@ -160,6 +148,18 @@ $(document).ready(function()
             index++;
           });
       }
+      
+    /*******************************************************************************************************************************
+     *
+     * Goes to the specified photo.
+     *
+     ******************************************************************************************************************************/
+    var goToPhoto = function (index)
+      {
+        info("goToPhoto(%d)", index);
+        currentPhotoIndex = index;
+        closeLightBox();
+      }
     
     /*******************************************************************************************************************************
      *
@@ -169,16 +169,23 @@ $(document).ready(function()
     var closeLightBox = function()
       {
         info("closeLightBox()");
+
+        $("#divimage" + activeContainer).css({ "display" : "none" });
+        $("#caption" + activeContainer).css({ "display" : "none" });
+
+        // FIXME: if the new photo is not ready, show again the initial waiting widget
+
+        if (currentPhotoIndex < 0)
+          {
+            currentPhotoIndex = 0;
+          }
+
         $("#lightbox").fadeOut(new function()
           {
             setTimeout(function() 
               {
-                if (currentPhotoIndex < 0)
-                  {
-                    currentPhotoIndex = 0;
-                  }
-                  
                 updateUrl();
+                currentPhotoIndex--; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
                 $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
               }, 500);
@@ -525,16 +532,14 @@ $(document).ready(function()
             hideInitialWaitingWidget();
             fitPhoto(photo, activeContainer);
             animating = true;
-            currentZindex--;
 
             var url = $(photo).attr('url' + mediaSize);
-//console.log("Using " + url);
             $("#image" + activeContainer).attr('src', url);
 
             $("#divimage" + activeContainer).css(
               {
                 "display" : "block",
-                "z-index" : currentZindex
+                "z-index" : --currentZindex
               });
 
             showWidget("#loadingWidget", false);
