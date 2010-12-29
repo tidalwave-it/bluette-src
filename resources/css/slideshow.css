@@ -119,6 +119,12 @@ body
   {
     position:        absolute;
     z-index:         15;
+  }
+
+#initialWaitingWidget
+  {
+    position:        absolute;
+    z-index:         15;
     background:      url(/media/graphics/big-roller.gif) no-repeat center;
   }
 
@@ -205,15 +211,6 @@ body
     margin:          8px 8px 8px 8px;
   }
 
-#menu
-  {
-    position:        absolute;
-    bottom:          10px; 
-    width:           1000px; 
-    z-index:         15;
-    text-align:      right; 
-  }
-
 #copyright
   {
     position:        relative;
@@ -234,14 +231,3 @@ body
   {
     margin-left:     20px;
   }
-
-#menu a:link, #menu a:visited, #menu a:active, #menu a:hover
-  {
-    margin-right:    10px;
-    color:           #aaaaaa;
-    text-decoration: none;
-    font-size:       130%;
-    font-family:     sans-serif;
-    font-weight:     bold;
-  }
-

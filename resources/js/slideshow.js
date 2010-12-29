@@ -45,6 +45,7 @@ $(document).ready(function()
     var playing = initialPhotoId != "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
+    var slideShowVisible = false;
 
     /*******************************************************************************************************************************
      *
@@ -87,6 +88,7 @@ $(document).ready(function()
           {
             setTimeout(function() 
               {
+                slideShowVisible = false;
                 location.href = baseUrl + "#lightbox";
 
                 $("#lightbox").fadeIn(new function()
@@ -118,7 +120,7 @@ $(document).ready(function()
             var url = getPhotoUrl(this, computeMediaSize(mediaSize));
             
             var img = $('<img/>').attr('src', url)
-                                 .css({ 'display' : 'none' })
+                                 .css({'display' : 'none'})
                                  .appendTo($("#thumbnails"))
                                  .click(function()
                                     {
@@ -174,25 +176,16 @@ $(document).ready(function()
     var closeLightBox = function()
       {
         info("closeLightBox()");
-
-        $("#divimage" + activeContainer).css({ "display" : "none" });
-        $("#caption" + activeContainer).css({ "display" : "none" });
-
-        // FIXME: if the new photo is not ready, show again the initial waiting widget
-
-        if (currentPhotoIndex < 0)
-          {
-            currentPhotoIndex = 0;
-          }
-
+        $("#divimage" + activeContainer).css({"display" : "none"});
+        $("#caption" + activeContainer).css({"display" : "none"});
         $("#lightbox").fadeOut(new function()
           {
             setTimeout(function() 
               {
+                currentPhotoIndex = Math.max(currentPhotoIndex,  0);
                 updateUrl();
                 currentPhotoIndex--; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
-                $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
               }, 500);
           });
       }
@@ -293,6 +286,7 @@ $(document).ready(function()
         border = Math.max(Math.round(availWidth * 10 / 1920), 2);
         debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
+        $("#initialWaitingWidget").css({"width"  : availWidth, "height" : availHeight});
         $("#divimage1").css({"width"  : availWidth, "height" : availHeight});
         $("#divimage2").css({"width"  : availWidth, "height" : availHeight});
         $("#page").css({"margin-top" : -Math.round(availHeight / 2)});
@@ -337,7 +331,6 @@ $(document).ready(function()
         else
           {
             scheduleNextSlide(0);
-            $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
           }
       }
 
@@ -357,17 +350,6 @@ $(document).ready(function()
             datatype : "xml",
             success  : parseCatalog
           });
-      }
-
-    /*******************************************************************************************************************************
-     *
-     *
-     *
-     ******************************************************************************************************************************/
-    var hideInitialWaitingWidget = function()
-      {
-        info("hideInitialWaitingWidget()");
-        $("#imageOverlay").css({"background" : "none"});
       }
 
     /*******************************************************************************************************************************
@@ -505,6 +487,7 @@ $(document).ready(function()
     var showCurrentPhoto = function() 
       {
         info("showCurrentPhoto() - currentPhotoIndex: %d", currentPhotoIndex);
+        
         var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var mediaSize = computeMediaSize(neededSize);
@@ -513,6 +496,12 @@ $(document).ready(function()
         if (!$(photo).attr('loaded' + mediaSize))
           {
             debug("media sized %d not loaded yet", mediaSize);
+
+            if (!slideShowVisible)
+              {
+                $("#initialWaitingWidget").fadeIn();
+              }
+              
             showWidget("#loadingWidget", true);
             $(photo).attr('id', photo.name); // TODO: this can be moved to initialization
 
@@ -534,7 +523,15 @@ $(document).ready(function()
         else
           {
             debug("media sized %d already loaded", mediaSize);
-            hideInitialWaitingWidget();
+
+            if (!slideShowVisible)
+              {
+                slideShowVisible = true;
+                $("#slideshow").fadeIn(); 
+                $("#initialWaitingWidget").css({"display" : "none"});
+//                $("#initialWaitingWidget").fadeOut(); FIXME: get moved up
+              }
+          
             fitPhoto(photo, activeContainer);
             animating = true;
 
@@ -650,6 +647,6 @@ $(document).ready(function()
     setupNavigationWidgets();
     fitPhotoView();
     $(window).resize(fitPhotoView); 
-    loadCatalog();
+    setTimeout(loadCatalog, 0);
   });
 
