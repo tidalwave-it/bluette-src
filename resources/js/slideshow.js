@@ -35,6 +35,7 @@ var home = "/blog/";
 var slideshowSpeed = 8000;
 var sizes = [1920, 1280, 800, 400, 200];
 var thumbnailsPerRow = 10;
+var logging = false;
 
 $(document).ready(function() 
   {
@@ -60,6 +61,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var setupNavigationWidgets = function()
       {
+        info("setupNavigationWidgets()");
+        
         $("#navigationPreviousWidget").click(function()
           {
             changePhoto(-1);
@@ -86,6 +89,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var openLightBox = function()
       {
+        info("openLightBox()");
         pause();
         $("#slideshow").fadeOut(new function()
           {
@@ -114,6 +118,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var loadThumbnails = function()
       {
+        info("loadThumbnails()");
         var mediaSize = availWidth / thumbnailsPerRow;
         thumbnailsLoaded = true;
         var index = 0;
@@ -171,6 +176,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var closeLightBox = function()
       {
+        info("closeLightBox()");
         $("#lightbox").fadeOut(new function()
           {
             setTimeout(function() 
@@ -194,6 +200,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var updateUrl = function()
       {
+        info("updateUrl()");
         location.href = baseUrl + "#" + photos[currentPhotoIndex].id;                    
       }
       
@@ -204,6 +211,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var goHome = function()
       {
+        info("goHome()");
         $("#slideshow").fadeOut(new function()
           {
             setTimeout(function() 
@@ -220,6 +228,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var play = function()
       {
+        info("play() - playing: %s", playing);
+        
         if (!playing)
           {
             playing = true;
@@ -235,6 +245,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var pause = function()
       {
+        info("pause() - playing: %s", playing);
+        
         if (playing)
           {
             playing = false;
@@ -256,6 +268,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var updateWidgetsVisibility = function()
       {
+        info("updateWidgetsVisibility()");
         showWidget("#navigationPreviousWidget", true);
         showWidget("#navigationNextWidget", true);
         showWidget("#navigationHomeWidget", true);
@@ -270,9 +283,11 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var fitPhotoView = function()
       {
+        info("fitPhotoView()");
         availWidth  = Math.round($(window).width()  * 1.0);
         availHeight = Math.round($(window).height() * 0.85);
         border = Math.max(Math.round(availWidth * 10 / 1920), 2);
+        debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
         $("#divimage1").css({"width"  : availWidth, "height" : availHeight});
         $("#divimage2").css({"width"  : availWidth, "height" : availHeight});
@@ -291,6 +306,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var parseCatalog = function (xml)
       {
+        info("parseCatalog()");
         var index = 0;
 
         $(xml).find("album > img").each(function()
@@ -307,6 +323,8 @@ $(document).ready(function()
  
             index++; 
           });
+          
+        debug("loaded %s items", photos.length);
 
         if (initialPhotoId === "lightbox")
           {
@@ -326,6 +344,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var loadCatalog = function()
       {
+        info("loadCatalog()");
+        
         $.ajax(
           {
             type     : "GET",
@@ -342,6 +362,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var hideInitialWaitingWidget = function()
       {
+        info("hideInitialWaitingWidget()");
         $("#imageOverlay").css({"background" : "none"});
       }
 
@@ -352,6 +373,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var changePhoto = function (direction) 
       {
+        info("changePhoto(%d) - animating: %s", direction, animating);
+        
         if (!animating) 
           {
             currentContainer = activeContainer;
@@ -368,6 +391,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var computeLargestFittingSize = function (component, container)
       {
+        info("computeLargestFittingSize(%d x %d, %d x %d)", component.width, component.height, container.width, container.height);
+        
         var width  = container.width - border * 2;
         var scale  = Math.min(width / component.width, 1);
 
@@ -383,6 +408,8 @@ $(document).ready(function()
             height : Math.round(component.height * scale) 
           };
           
+        debug("returning %d x %d", size.width, size.height);
+          
         return size;
       }
 
@@ -393,6 +420,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var fitPhoto = function (photo, containerIndex)
       {
+        info("fitPhoto(%s, containerIndex: %d)", photo.id, containerIndex);
+        
         var size = computeLargestFittingSize(photo, 
           { 
             width  : availWidth - border * 2,
@@ -401,6 +430,8 @@ $(document).ready(function()
 
         var left = Math.round((availWidth  - border * 2 - size.width)  / 2);
         var top  = Math.round((availHeight - border * 2 - size.height) / 2);
+        
+        debug("size: %d x %d, left: %d, top: %d", size.width, size.height, left, top);
 
         $("#image" + containerIndex).css(
           { 
@@ -469,13 +500,15 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var showCurrentPhoto = function() 
       {
+        info("showCurrentPhoto() - currentPhotoIndex: %d", currentPhotoIndex);
         var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var mediaSize = computeMediaSize(neededSize);
-
-//console.log("neededSize : " + neededSize + " loadedSize: " + loadedSize);
+        debug("neededSize: %d", neededSize);
+        
         if (!$(photo).attr('loaded' + mediaSize))
           {
+            debug("media sized %d not loaded yet", mediaSize);
             showWidget("#loadingWidget", true);
             $(photo).attr('id', photo.name); // TODO: this can be moved to initialization
 
@@ -484,20 +517,19 @@ $(document).ready(function()
                 $(photo).attr('url' + this, getPhotoUrl(photo, this));
               });
 
-//console.log("Preloading " + loadedSize);
-
             $('<img/>').attr('src', $(photo).attr('url' + mediaSize)).load(function()
               {
+                debug("media sized %d loaded", mediaSize);
                 $(photo).attr('loaded' + mediaSize, true)
                         .attr('width',              this.width)
                         .attr('height',             this.height);
-
                 showCurrentPhoto();
               });
           }
 
         else
           {
+            debug("media sized %d already loaded", mediaSize);
             hideInitialWaitingWidget();
             fitPhoto(photo, activeContainer);
             animating = true;
@@ -521,7 +553,6 @@ $(document).ready(function()
                 setTimeout(function() 
                   {
                     animating = false;
-
                     $("#caption" + activeContainer).text(getCurrentCaption()).fadeIn();
 
                     if (playing)
@@ -558,6 +589,8 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var scheduleNextSlide = function (delay)
       {
+        info("scheduleNextSlide(%d)", delay);
+        
         if (delay > 100)
           {
             $("#waitingWidget").fadeIn();
@@ -579,6 +612,32 @@ $(document).ready(function()
       {
         //$(widget).css({ "display" : status ? "block" : "none" });
         $(widget).css({"display" : status ? "inline" : "none"});
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     *
+     ******************************************************************************************************************************/
+    function info (pattern, arg1, arg2, arg3, arg4)
+      {
+        if (logging)
+          {
+            var d = new Date();
+            console.log("%d:%d:%d.%d " + pattern, d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds(), arg1, arg2, arg3, arg4);
+          }
+      }
+
+    /*******************************************************************************************************************************
+     *
+     *
+     ******************************************************************************************************************************/
+    function debug (pattern, arg1, arg2, arg3, arg4)
+      {
+        if (logging)
+          {
+            var d = new Date();
+            console.log("%d:%d:%d.%d >>>> " + pattern, d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds(), arg1, arg2, arg3, arg4);
+          }
       }
 
     /*******************************************************************************************************************************
