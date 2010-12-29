@@ -36,9 +36,9 @@ $(document).ready(function()
     var currentContainer = 2;	
     var currentPhotoIndex = -1;
     var currentZindex = -1;
-    var availWidth  = 1000;
-    var availHeight = 664;
-    var border = 10;
+    var availWidth;
+    var availHeight;
+    var border;
     var animating = false;
     var baseUrl = location.href.replace(/#.*/, "");
     var initialPhotoId = location.href.replace(/.*#/, "");
@@ -93,10 +93,7 @@ $(document).ready(function()
                   {
                     if (!thumbnailsLoaded)
                       {
-                        setTimeout(function() 
-                          {
-                            loadThumbnails();
-                          }, 500);
+                        setTimeout(loadThumbnails, 500);
                       }
                   });
               }, 500);
