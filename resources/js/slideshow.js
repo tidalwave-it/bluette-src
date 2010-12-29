@@ -42,7 +42,7 @@ $(document).ready(function()
     var animating = false;
     var baseUrl = location.href.replace(/#.*/, "");
     var initialPhotoId = location.href.replace(/.*#/, "");
-    var playing = initialPhotoId != "lightbox";
+    var playing = initialPhotoId != "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
 
