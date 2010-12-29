@@ -117,36 +117,44 @@ $(document).ready(function()
         
         $(photos).each(function()
           {
-            var range = 5;
-            var angle = Math.random() * range * 2 - range + 'deg';    
-            var theIndex = index;
+            var thisIndex = index++;
             var url = getPhotoUrl(this, computeMediaSize(mediaSize));
             
-            $('<img/>').attr('src', url)
-                       .css(
-                          {
-                           '-webkit-transform' : 'rotate(' + angle + ')',
-                           '-moz-transform'    : 'rotate(' + angle + ')',
-                           'display'           : 'none'
-                          })
-                       .appendTo($("#thumbnails"))
-                       .click(function()
-                         {
-                           goToPhoto(theIndex);
-                         })
-                       .load(function()
-                         {
-                           var size = computeLargestFittingSize(this, 
-                             { 
-                               width  : mediaSize,
-                               height : mediaSize 
-                             });
-                             
-                           $(this).attr('width', size.width).attr('height', size.height).fadeIn();
-                         });              
+            var img = $('<img/>').attr('src', url)
+                                 .css({ 'display' : 'none' })
+                                 .appendTo($("#thumbnails"))
+                                 .click(function()
+                                    {
+                                      goToPhoto(thisIndex);
+                                    });
 
-            index++;
+            initializeThumbnail(img)
+            img.load(function()
+              {
+                var size = computeLargestFittingSize(this, 
+                  { 
+                    width  : mediaSize,
+                    height : mediaSize 
+                  });
+ 
+                $(this).attr('width', size.width).attr('height', size.height).fadeIn();
+              });              
           });
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     * Performs specific thumbnail initialization.
+     *
+     ******************************************************************************************************************************/
+    function initializeThumbnail (img)
+      {
+        var range = 5;
+        var angle = Math.random() * range * 2 - range + 'deg';    
+        img.css({
+                  '-webkit-transform' : 'rotate(' + angle + ')',
+                  '-moz-transform'    : 'rotate(' + angle + ')'
+                });
       }
       
     /*******************************************************************************************************************************
