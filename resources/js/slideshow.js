@@ -30,32 +30,32 @@
  *
  **********************************************************************************************************************************/
 
-var slideshowSpeed = 8000;
 var photoPrefix = "/media/stillimages/";
-var photos = new Array();
-var availWidth  = 1000;
-var availHeight = 664;
-var border = 10;
-var sizes = [1920, 1280, 800, 400, 200];
 var home = "/blog/";
+var slideshowSpeed = 8000;
+var sizes = [1920, 1280, 800, 400, 200];
 var thumbnailsPerRow = 10;
 
 $(document).ready(function() 
   {
+    var photos = new Array();
     var activeContainer = 1;	
     var currentContainer = 2;	
     var currentPhotoIndex = -1;
+    var currentZindex = -1;
+    var availWidth  = 1000;
+    var availHeight = 664;
+    var border = 10;
     var animating = false;
     var baseUrl = location.href.replace(/#.*/, "");
     var initialPhotoId = location.href.replace(/.*#/, "");
-    var currentZindex = -1;
     var playing = initialPhotoId != "lightbox";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
 
     /*******************************************************************************************************************************
      *
-     *
+     * Binds the navigation widgets to the related controller functions.
      *
      ******************************************************************************************************************************/
     var setupNavigationWidgets = function()
@@ -76,12 +76,12 @@ $(document).ready(function()
         $("#navigationPlayWidget").click(play);
         $("#navigationPauseWidget").click(pause);
 
-        setWidgetsVisibility();
+        updateWidgetsVisibility();
       }
       
     /*******************************************************************************************************************************
      *
-     *
+     * Opens the LightBox.
      *
      ******************************************************************************************************************************/
     var openLightBox = function()
@@ -109,7 +109,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Loads the thumbnail in the LightBox. Images are loaded in background and rendered as they are ready.
      *
      ******************************************************************************************************************************/
     var loadThumbnails = function()
@@ -144,14 +144,14 @@ $(document).ready(function()
 
                            // FIXME: use the scheduler instead
                            showCurrentPhoto();
-                           location.href = baseUrl + "#" + photos[currentPhotoIndex].id;
+                           updateUrl();
                            // END FIXME
                            //scheduleNextSlide(0);
                            closeLightBox();
                          })
                        .load(function()
                          {
-                           var size = computeBestSize(this, 
+                           var size = computeLargestFittingSize(this, 
                              { 
                                width  : mediaSize,
                                height : mediaSize 
@@ -166,7 +166,7 @@ $(document).ready(function()
     
     /*******************************************************************************************************************************
      *
-     *
+     * Closes the LightBox.
      *
      ******************************************************************************************************************************/
     var closeLightBox = function()
@@ -180,8 +180,7 @@ $(document).ready(function()
                     currentPhotoIndex = 0;
                   }
                   
-                var photo = photos[currentPhotoIndex];
-                location.href = baseUrl + "#" + photo.id;                    
+                updateUrl();
                 scheduleNextSlide(0);
                 $("#slideshow").fadeIn(); // FIXME: postpone when the first photo is rendered
               }, 500);
@@ -190,7 +189,17 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
+     * Update the Url with the current photo id.
      *
+     ******************************************************************************************************************************/
+    var updateUrl = function()
+      {
+        location.href = baseUrl + "#" + photos[currentPhotoIndex].id;                    
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     * Goes to the home page.
      *
      ******************************************************************************************************************************/
     var goHome = function()
@@ -206,7 +215,7 @@ $(document).ready(function()
       
     /*******************************************************************************************************************************
      *
-     *
+     * Starts playing the slideshow.
      *
      ******************************************************************************************************************************/
     var play = function()
@@ -214,14 +223,14 @@ $(document).ready(function()
         if (!playing)
           {
             playing = true;
-            setWidgetsVisibility();
+            updateWidgetsVisibility();
             scheduleNextSlide(0);
           }
       }
       
     /*******************************************************************************************************************************
      *
-     *
+     * Stops the slideshow.
      *
      ******************************************************************************************************************************/
     var pause = function()
@@ -229,7 +238,7 @@ $(document).ready(function()
         if (playing)
           {
             playing = false;
-            setWidgetsVisibility();
+            updateWidgetsVisibility();
             $("#waitingWidget").fadeOut();
 
             if (schedulerTimer != null)
@@ -242,10 +251,10 @@ $(document).ready(function()
       
     /*******************************************************************************************************************************
      *
-     *
+     * Changes the vidgets visibility in fuction of the current status.
      *
      ******************************************************************************************************************************/
-    var setWidgetsVisibility = function()
+    var updateWidgetsVisibility = function()
       {
         showWidget("#navigationPreviousWidget", true);
         showWidget("#navigationNextWidget", true);
@@ -256,10 +265,10 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Resizes the view in function of the available space.
      *
      ******************************************************************************************************************************/
-    var resize = function()
+    var fitPhotoView = function()
       {
         availWidth  = Math.round($(window).width()  * 1.0);
         availHeight = Math.round($(window).height() * 0.85);
@@ -271,13 +280,13 @@ $(document).ready(function()
 
         if (currentPhotoIndex >= 0)
           {
-            resizePhoto(photos[currentPhotoIndex], activeContainer);
+            fitPhoto(photos[currentPhotoIndex], activeContainer);
           }
       }
 
     /*******************************************************************************************************************************
      *
-     *
+     * Loads the catalog of photos.
      *
      ******************************************************************************************************************************/
     var parseCatalog = function (xml)
@@ -312,7 +321,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Retrieves the catalog of photos.
      *
      ******************************************************************************************************************************/
     var loadCatalog = function()
@@ -338,7 +347,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Changes the current photo, according to the given direction (-1 = backward, +1 = forward).
      *
      ******************************************************************************************************************************/
     var changePhoto = function (direction) 
@@ -354,24 +363,24 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Computes the largest fitting size of a component to be rendered within a container, preserving the aspect ratio.
      *
      ******************************************************************************************************************************/
-    var computeBestSize = function (photo, container)
+    var computeLargestFittingSize = function (component, container)
       {
         var width  = container.width - border * 2;
-        var scale  = Math.min(width / photo.width, 1);
+        var scale  = Math.min(width / component.width, 1);
 
-        if (photo.height * scale > container.height)
+        if (component.height * scale > container.height)
           {
             height = container.height - border * 2;
-            scale  = Math.min(height / photo.height, 1);
+            scale  = Math.min(height / component.height, 1);
           }
 
         var size = 
           { 
-            width  : Math.round(photo.width  * scale),
-            height : Math.round(photo.height * scale) 
+            width  : Math.round(component.width  * scale),
+            height : Math.round(component.height * scale) 
           };
           
         return size;
@@ -379,12 +388,12 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Resizes the photo renderer to fit in the available space.
      *
      ******************************************************************************************************************************/
-    var resizePhoto = function (photo, container)
+    var fitPhoto = function (photo, containerIndex)
       {
-        var size = computeBestSize(photo, 
+        var size = computeLargestFittingSize(photo, 
           { 
             width  : availWidth - border * 2,
             height : availHeight - border * 2 
@@ -393,7 +402,7 @@ $(document).ready(function()
         var left = Math.round((availWidth  - border * 2 - size.width)  / 2);
         var top  = Math.round((availHeight - border * 2 - size.height) / 2);
 
-        $("#image" + container).css(
+        $("#image" + containerIndex).css(
           { 
             "left"         : left, 
             "top"          : top, 
@@ -410,7 +419,7 @@ $(document).ready(function()
             "height"       : size.height 
           });
 
-        $("#caption" + container).css(
+        $("#caption" + containerIndex).css(
           { 
             //"left"         : size.left, 
             //"width"        : size.width + 2 * border, 
@@ -454,7 +463,8 @@ $(document).ready(function()
       
     /*******************************************************************************************************************************
      *
-     *
+     * Show the current photo. The caption is faded in after a short delay. If the needed photo has not been loaded yet, the 
+     * loadingWidget is shown and the image is loaded before rendering.
      *
      ******************************************************************************************************************************/
     var showCurrentPhoto = function() 
@@ -467,9 +477,9 @@ $(document).ready(function()
         if (!$(photo).attr('loaded' + mediaSize))
           {
             showWidget("#loadingWidget", true);
-            $(photo).attr('id', photo.name);
+            $(photo).attr('id', photo.name); // TODO: this can be moved to initialization
 
-            $(sizes).each(function()
+            $(sizes).each(function() // TODO: this can be moved to initialization
               {
                 $(photo).attr('url' + this, getPhotoUrl(photo, this));
               });
@@ -489,7 +499,7 @@ $(document).ready(function()
         else
           {
             hideInitialWaitingWidget();
-            resizePhoto(photo, activeContainer);
+            fitPhoto(photo, activeContainer);
             animating = true;
             currentZindex--;
 
@@ -507,7 +517,7 @@ $(document).ready(function()
             $("#caption" + currentContainer).fadeOut();
             $("#divimage" + currentContainer).fadeOut(function() 
               {
-                location.href = baseUrl + "#" + photo.id;
+                updateUrl();
                 setTimeout(function() 
                   {
                     animating = false;
@@ -525,7 +535,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Computes the caption for the current photo.
      *
      ******************************************************************************************************************************/
     var getCurrentCaption = function()
@@ -533,7 +543,7 @@ $(document).ready(function()
         var photo = photos[currentPhotoIndex];
         var caption = "" + (currentPhotoIndex + 1) + " / " + photos.length;
 
-        if (photo.caption != null)
+        if (photo.caption != null && photo.caption != "")
           {
             caption = caption + " - " + photo.caption;
           }
@@ -543,7 +553,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Schedules the next slide to be rendered within the given delay.
      *
      ******************************************************************************************************************************/
     var scheduleNextSlide = function (delay)
@@ -573,12 +583,12 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     *
+     * Initialization.
      *
      ******************************************************************************************************************************/
     setupNavigationWidgets();
-    resize();
-    $(window).resize(resize); 
+    fitPhotoView();
+    $(window).resize(fitPhotoView); 
     loadCatalog();
   });
 
