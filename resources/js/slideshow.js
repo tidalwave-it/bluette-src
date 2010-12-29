@@ -653,6 +653,16 @@ $(document).ready(function()
     setupNavigationWidgets();
     fitPhotoView();
     $(window).resize(fitPhotoView); 
+    
+    try
+      {
+        $.preloadCssImages();
+      }
+    catch (e)
+      {
+        info("Exception while preloading CSS resources: %s", e);
+      }
+      
     loadCatalog();
   });
 
