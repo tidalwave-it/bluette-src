@@ -29,14 +29,6 @@
  * FIXME: don't store width, height in photo, only the aspect ratio
  *
  **********************************************************************************************************************************/
-
-var photoPrefix = "/media/stillimages/";
-var home = "/blog/";
-var slideshowSpeed = 8000;
-var sizes = [1920, 1280, 800, 400, 200];
-var thumbnailsPerRow = 10;
-var logging = false;
-
 $(document).ready(function() 
   {
     var photos = new Array();
@@ -349,7 +341,7 @@ $(document).ready(function()
         $.ajax(
           {
             type     : "GET",
-            url      : "images3.xml",
+            url      : catalogUrl,
             datatype : "xml",
             success  : parseCatalog
           });
