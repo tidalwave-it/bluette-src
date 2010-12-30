@@ -89,6 +89,7 @@ $(document).ready(function()
             setTimeout(function() 
               {
                 slideShowVisible = false;
+                $("#initialWaitingWidget").css({"display" : "none"});
                 location.href = baseUrl + "#lightbox";
 
                 $("#lightbox").fadeIn(new function()
@@ -177,7 +178,7 @@ $(document).ready(function()
       {
         info("closeLightBox()");
         $("#divimage" + activeContainer).css({"display" : "none"});
-        $("#caption" + activeContainer).css({"display" : "none"});
+        $("#title" + activeContainer).css({"display" : "none"});
         $("#lightbox").fadeOut(new function()
           {
             setTimeout(function() 
@@ -310,9 +311,9 @@ $(document).ready(function()
         $(xml).find("album > img").each(function()
           {
             var name    = $(this).attr("src").replace(/\..*/, "");
-            var caption = $(this).attr("title");
+            var title = $(this).attr("title");
             var info    = $(this).attr("caption");
-            photos.push({"name" : name, "caption" : caption, "info" : info});
+            photos.push({"name" : name, "title" : title, "info" : info});
 
             if (name == initialPhotoId)
               {
@@ -324,13 +325,16 @@ $(document).ready(function()
           
         debug("loaded %s items", photos.length);
 
-        if (initialPhotoId === "lightbox")
+        if (photos.length > 0)
           {
-            openLightBox();
-          }
-        else
-          {
-            scheduleNextSlide(0);
+            if (initialPhotoId === "lightbox")
+              {
+                openLightBox();
+              }
+            else
+              {
+                scheduleNextSlide(0);
+              }
           }
       }
 
@@ -436,7 +440,7 @@ $(document).ready(function()
             "height"       : size.height 
           });
 
-        $("#caption" + containerIndex).css(
+        $("#title" + containerIndex).css(
           { 
             //"left"         : size.left, 
             //"width"        : size.width + 2 * border, 
@@ -545,14 +549,14 @@ $(document).ready(function()
               });
 
             showWidget("#loadingWidget", false);
-            $("#caption" + currentContainer).fadeOut();
+            $("#title" + currentContainer).fadeOut();
             $("#divimage" + currentContainer).fadeOut(function() 
               {
                 updateUrl();
                 setTimeout(function() 
                   {
                     animating = false;
-                    $("#caption" + activeContainer).text(getCurrentCaption()).fadeIn();
+                    $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
 
                     if (playing)
                       {
@@ -565,20 +569,20 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     * Computes the caption for the current photo.
+     * Computes the title for the current photo.
      *
      ******************************************************************************************************************************/
-    var getCurrentCaption = function()
+    var getCurrentTitle = function()
       {
         var photo = photos[currentPhotoIndex];
-        var caption = "" + (currentPhotoIndex + 1) + " / " + photos.length;
+        var title = "" + (currentPhotoIndex + 1) + " / " + photos.length;
 
-        if (photo.caption != null && photo.caption != "")
+        if (photo.title != null && photo.title != "")
           {
-            caption = caption + " - " + photo.caption;
+            title = title + " - " + photo.title;
           }
 
-        return caption;
+        return title;
       }
 
     /*******************************************************************************************************************************
