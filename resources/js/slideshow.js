@@ -184,7 +184,7 @@ $(document).ready(function()
             setTimeout(function() 
               {
                 currentPhotoIndex = Math.max(currentPhotoIndex,  0);
-                updateUrl();
+//                updateUrl();
                 currentPhotoIndex--; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
               }, 500);
@@ -305,8 +305,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var parseCatalog = function (xml)
       {
-        info("parseCatalog()");
-        var index = 0;
+        info("parseCatalog() - " + xml);
 
         $(xml).find("album > img").each(function()
           {
@@ -317,10 +316,8 @@ $(document).ready(function()
 
             if (name == initialPhotoId)
               {
-                currentPhotoIndex = index - 1;
+                currentPhotoIndex = photos.length - 1; 
               }
- 
-            index++; 
           });
           
         debug("loaded %s items", photos.length);
@@ -333,6 +330,9 @@ $(document).ready(function()
               }
             else
               {
+                currentPhotoIndex = Math.max(currentPhotoIndex,  0);
+//                updateUrl();
+                currentPhotoIndex--; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
               }
           }
