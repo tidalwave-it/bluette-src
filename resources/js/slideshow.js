@@ -31,7 +31,7 @@
  **********************************************************************************************************************************/
 $(document).ready(function() 
   {
-    var photos = new Array();
+    var photos = [];
     var activeContainer = 1;	
     var currentContainer = 2;	
     var currentPhotoIndex = -1;
@@ -65,7 +65,7 @@ $(document).ready(function()
         $("#navigationPauseWidget").click(pause);
 
         updateWidgetsVisibility();
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -76,7 +76,7 @@ $(document).ready(function()
       {
         pause();
         changePhoto(+1);
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -87,7 +87,7 @@ $(document).ready(function()
       {
         pause();
         changePhoto(-1);
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -98,7 +98,7 @@ $(document).ready(function()
       {
         info("openLightBox()");
         pause();
-        $("#slideshow").fadeOut(new function()
+        $("#slideshow").fadeOut(function()
           {
             setTimeout(function() 
               {
@@ -106,7 +106,7 @@ $(document).ready(function()
                 $("#initialWaitingWidget").css({"display" : "none"});
                 location.href = baseUrl + "#lightbox";
 
-                $("#lightbox").fadeIn(new function()
+                $("#lightbox").fadeIn(function()
                   {
                     if (!thumbnailsLoaded)
                       {
@@ -115,7 +115,7 @@ $(document).ready(function()
                   });
               }, 500);
           });
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -143,7 +143,7 @@ $(document).ready(function()
                                       goToPhoto(thisIndex);
                                     });
 
-            initializeThumbnail(img)
+            initializeThumbnail(img);
             img.load(function()
               {
                 debug("Loaded %s...", this);
@@ -161,7 +161,7 @@ $(document).ready(function()
                 $(this).attr('width', size.width).attr('height', size.height).fadeIn();
               });              
           });
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -188,7 +188,7 @@ $(document).ready(function()
         info("goToPhoto(%d)", index);
         currentPhotoIndex = index;
         closeLightBox();
-      }
+      };
     
     /*******************************************************************************************************************************
      *
@@ -200,7 +200,7 @@ $(document).ready(function()
         info("closeLightBox()");
         $("#divimage" + activeContainer).css({"display" : "none"});
         $("#title" + activeContainer).css({"display" : "none"});
-        $("#lightbox").fadeOut(new function()
+        $("#lightbox").fadeOut(function()
           {
             setTimeout(function() 
               {
@@ -208,7 +208,7 @@ $(document).ready(function()
                 scheduleNextSlide(0);
               }, 500);
           });
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -219,7 +219,7 @@ $(document).ready(function()
       {
         info("updateUrl()");
         location.href = baseUrl + "#" + photos[currentPhotoIndex].id;                    
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -229,14 +229,14 @@ $(document).ready(function()
     var goHome = function()
       {
         info("goHome()");
-        $("#slideshow").fadeOut(new function()
+        $("#slideshow").fadeOut(function()
           {
             setTimeout(function() 
               {
                 location.href = home; 
               }, 500);
           });
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -253,7 +253,7 @@ $(document).ready(function()
             updateWidgetsVisibility();
             scheduleNextSlide(0);
           }
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -270,13 +270,13 @@ $(document).ready(function()
             updateWidgetsVisibility();
             $("#waitingWidget").fadeOut();
 
-            if (schedulerTimer != null)
+            if (schedulerTimer !== null)
               {
                 clearTimeout(schedulerTimer);
                 schedulerTimer = null;
               }
           }
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -292,7 +292,7 @@ $(document).ready(function()
         showWidget("#navigationLightBoxWidget", true);
         showWidget("#navigationPlayWidget", !playing);
         showWidget("#navigationPauseWidget", playing);
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -316,7 +316,7 @@ $(document).ready(function()
           {
             fitPhoto(photos[currentPhotoIndex], activeContainer);
           }
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -358,7 +358,7 @@ $(document).ready(function()
           {
             fatal("Error: no photos in this slideshow");
           }
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -369,7 +369,7 @@ $(document).ready(function()
       {
         $("#initialWaitingWidget").css({"display" : "none"});
         $("#content").append(message);
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -392,7 +392,7 @@ $(document).ready(function()
                 fatal("Cannot load the catalog: " + xmlHttpRequest.responseText);
               }
           });
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -439,7 +439,7 @@ $(document).ready(function()
         debug("returning %d x %d", size.width, size.height);
           
         return size;
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -488,7 +488,7 @@ $(document).ready(function()
             //var captionFontSize = Math.max(Math.round(Math.max(size.width, size.height) * 27 / 1280), 6)
             "font-size"    : Math.max(Math.round(availWidth * 25 / 1280), 6)
           });
-      }  
+      };
 
     /*******************************************************************************************************************************
      *
@@ -498,7 +498,7 @@ $(document).ready(function()
     var getPhotoUrl = function (photo, size)
       {
         return photoPrefix + size + "/" + photo.name + ".jpg";
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -518,7 +518,7 @@ $(document).ready(function()
           });
 
         return loadedSize;
-      }
+      };
       
     /*******************************************************************************************************************************
      *
@@ -615,13 +615,13 @@ $(document).ready(function()
         var photo = photos[currentPhotoIndex];
         var title = "" + (currentPhotoIndex + 1) + " / " + photos.length;
 
-        if (photo.title != null && photo.title != "")
+        if (photo.title !== null && photo.title !== "")
           {
             title = title + " - " + photo.title;
           }
 
         return title;
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -642,7 +642,7 @@ $(document).ready(function()
             showWidget("#waitingWidget", false);
             changePhoto(+1);
           }, delay);
-      }
+      };
 
     /*******************************************************************************************************************************
      *
@@ -653,7 +653,7 @@ $(document).ready(function()
       {
         //$(widget).css({ "display" : status ? "block" : "none" });
         $(widget).css({"display" : status ? "inline" : "none"});
-      }
+      };
       
     /*******************************************************************************************************************************
      *
