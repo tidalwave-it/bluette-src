@@ -23,7 +23,7 @@ html, body
 
 body
   {
-    background:      url(/media/graphics/dgrey013.gif) repeat;
+    background:      url(/media/graphics/marble.jpg) repeat;
   }
 
 #page
@@ -97,7 +97,7 @@ body
     left:            0px;
     top:             0px;
     /* background:      #000000; */
-    background:      url(/media/graphics/dgrey013.gif) repeat;
+    background:      url(/media/graphics/marble.jpg) repeat;
   }
 
 #image1, #image2
