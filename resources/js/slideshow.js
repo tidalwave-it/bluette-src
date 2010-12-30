@@ -56,16 +56,8 @@ $(document).ready(function()
       {
         info("setupNavigationWidgets()");
         
-        $("#navigationPreviousWidget").click(function()
-          {
-            changePhoto(-1);
-          });
-
-        $("#navigationNextWidget").click(function()
-          {
-            changePhoto(+1);
-          });
-
+        $("#navigationPreviousWidget").click(slideBackward);
+        $("#navigationNextWidget").click(slideForward);
         $("#navigationCloseWidget").click(closeLightBox);
         $("#navigationLightBoxWidget").click(openLightBox);
         $("#navigationHomeWidget").click(goHome);
@@ -73,6 +65,28 @@ $(document).ready(function()
         $("#navigationPauseWidget").click(pause);
 
         updateWidgetsVisibility();
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     * Moves to the next slide.
+     *
+     ******************************************************************************************************************************/
+    var slideForward = function()
+      {
+        pause();
+        changePhoto(+1);
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     * Moves to the next slide.
+     *
+     ******************************************************************************************************************************/
+    var slideBackward = function()
+      {
+        pause();
+        changePhoto(-1);
       }
       
     /*******************************************************************************************************************************
