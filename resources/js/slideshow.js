@@ -183,9 +183,7 @@ $(document).ready(function()
           {
             setTimeout(function() 
               {
-                currentPhotoIndex = Math.max(currentPhotoIndex,  0);
-//                updateUrl();
-                currentPhotoIndex--; // scheduleNextSlide will increment it
+                currentPhotoIndex = Math.max(currentPhotoIndex,  0) - 1; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
               }, 500);
           });
@@ -330,9 +328,7 @@ $(document).ready(function()
               }
             else
               {
-                currentPhotoIndex = Math.max(currentPhotoIndex,  0);
-//                updateUrl();
-                currentPhotoIndex--; // scheduleNextSlide will increment it
+                currentPhotoIndex = Math.max(currentPhotoIndex,  0) - 1; // scheduleNextSlide will increment it
                 scheduleNextSlide(0);
               }
           }
