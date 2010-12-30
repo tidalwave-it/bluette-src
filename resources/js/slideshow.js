@@ -111,7 +111,7 @@ $(document).ready(function()
     var loadThumbnails = function()
       {
         info("loadThumbnails()");
-        var mediaSize = availWidth / thumbnailsPerRow;
+        var mediaSize = Math.round(availWidth / thumbnailsPerRow);
         thumbnailsLoaded = true;
         var index = 0;
         
@@ -119,6 +119,7 @@ $(document).ready(function()
           {
             var thisIndex = index++;
             var url = getPhotoUrl(this, computeMediaSize(mediaSize));
+            debug("Loading %s...", url);
             
             var img = $('<img/>').attr('src', url)
                                  .css({'display' : 'none'})
@@ -131,7 +132,13 @@ $(document).ready(function()
             initializeThumbnail(img)
             img.load(function()
               {
-                var size = computeLargestFittingSize(this, 
+                debug("Loaded %s...", this);
+//                var size = computeLargestFittingSize(this, // works everywhere but IE
+                var size = computeLargestFittingSize(
+                  { 
+                    width  : $(this).width(),
+                    height : $(this).height()
+                  },
                   { 
                     width  : mediaSize,
                     height : mediaSize 
@@ -392,7 +399,7 @@ $(document).ready(function()
 
     /*******************************************************************************************************************************
      *
-     * Computes the largest fitting size of a component to be rendered within a container, preserving the aspect ratio.
+     * Computes the largest fitting size of an image to be rendered within a container, preserving the aspect ratio.
      *
      ******************************************************************************************************************************/
     var computeLargestFittingSize = function (component, container)
@@ -549,7 +556,7 @@ $(document).ready(function()
                 slideShowVisible = true;
                 $("#slideshow").fadeIn(); 
                 $("#initialWaitingWidget").css({"display" : "none"});
-//                $("#initialWaitingWidget").fadeOut(); FIXME: get moved up
+//                $("#initialWaitingWidget").fadeOut(); FIXME: gets moved up
               }
           
             fitPhoto(photo, activeContainer);
