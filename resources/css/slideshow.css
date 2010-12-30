@@ -25,7 +25,7 @@ html, body
 
 body
   {
-    background:      url(/media/graphics/marble.jpg) repeat;
+    background:      url(/media/graphics/marble25.jpg) repeat;
   }
 
 #page
@@ -99,7 +99,7 @@ body
     left:            0px;
     top:             0px;
     /* background:      #000000; */
-    background:      url(/media/graphics/marble.jpg) repeat;
+    background:      url(/media/graphics/marble25.jpg) repeat;
   }
 
 #image1, #image2
@@ -107,7 +107,7 @@ body
     position:        absolute;
     border:          solid;
     border-width:    0px;
-    border-color:    #444444;
+    border-color:    #222222;
   }
 
 #imageOverlay

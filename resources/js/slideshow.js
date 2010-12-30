@@ -308,7 +308,7 @@ $(document).ready(function()
         info("fitPhotoView()");
         availWidth  = Math.round($(window).width()  * 1.0);
         availHeight = Math.round($(window).height() * 0.85);
-        border = Math.max(Math.round(availWidth * 10 / 1920), 2);
+        border = Math.max(Math.round(availWidth * 6 / 1920), 2);
         debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
         $("#initialWaitingWidget").css({"width"  : availWidth, "height" : availHeight});
