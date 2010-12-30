@@ -85,25 +85,17 @@ body
     background:      url(/media/graphics/StoppingDown_Transparent.png) no-repeat right
   }
 
-#waiting
+#imageRenderer
   {
-    z-index:         10; 
-    background:      url(/media/graphics/big-roller.gif) no-repeat right;
-    position:        absolute;
-    height:          664px; 
-  }
-
-#header
-  {
-    width:           1200px;
     text-align:      center;
     margin:          0;
   }
 
 #divimage1, #divimage2
   { 
-    width:           100%;
     position:        absolute;
+    left:            0px;
+    top:             0px;
     /* background:      #000000; */
     background:      url(/media/graphics/dgrey013.gif) repeat;
   }
@@ -125,6 +117,8 @@ body
 #initialWaitingWidget
   {
     position:        absolute;
+    left:            0px;
+    top:             0px;
     z-index:         15;
     background:      url(/media/graphics/big-roller.gif) no-repeat center;
   }
