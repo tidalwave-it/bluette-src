@@ -120,7 +120,7 @@ body
     left:            0px;
     top:             0px;
     z-index:         15;
-    background:      url(/media/graphics/big-roller.gif) no-repeat center;
+    background:      url(/media/graphics/big-snake.gif) no-repeat center;
   }
 
 #waitingWidget, #loadingWidget
