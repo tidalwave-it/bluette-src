@@ -25,7 +25,10 @@
 
 /***********************************************************************************************************************************
  *
- * Inspired from code by Marco Kuiper (http://www.marcofolio.net/)
+ * @author  Fabrizio Giudici
+ *
+ * Inspired by code by Marco Kuiper (http://www.marcofolio.net/) 
+ *
  * FIXME: don't store width, height in photo, only the aspect ratio
  *
  **********************************************************************************************************************************/
