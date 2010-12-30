@@ -218,7 +218,8 @@ $(document).ready(function()
     var updateUrl = function()
       {
         info("updateUrl()");
-        location.href = baseUrl + "#" + photos[currentPhotoIndex].id;                    
+        location.href = baseUrl + "#" + photos[currentPhotoIndex].id;        
+        document.title = "StoppingDown: " + getCurrentTitle();
       };
       
     /*******************************************************************************************************************************
