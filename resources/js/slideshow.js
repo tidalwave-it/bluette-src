@@ -289,6 +289,7 @@ $(document).ready(function()
         showWidget("#navigationPreviousWidget", true);
         showWidget("#navigationNextWidget", true);
         showWidget("#navigationHomeWidget", true);
+        showWidget("#navigationLightBoxWidget", true);
         showWidget("#navigationPlayWidget", !playing);
         showWidget("#navigationPauseWidget", playing);
       }
