@@ -222,7 +222,7 @@ $(document).ready(function()
       {
         info("updateUrl()");
         location.href = baseUrl + "#" + photos[currentPhotoIndex].id;        
-        document.title = "StoppingDown: " + getCurrentTitle();
+        document.title = titlePrefix + getCurrentTitle();
       };
       
     /*******************************************************************************************************************************
