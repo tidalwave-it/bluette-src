@@ -41,8 +41,8 @@ $(document).ready(function()
     var border;
     var animating = false;
     var baseUrl = location.href.replace(/#.*/, "");
-    var initialPhotoId = location.href.replace(/.*#/, "");
-    var playing = initialPhotoId != "";
+    var initialStatus = location.href.replace(/.*#/, "").replace(baseUrl, "");
+    var playing = initialStatus === "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
@@ -319,7 +319,7 @@ $(document).ready(function()
             var info    = $(this).attr("caption");
             photos.push({"name" : name, "title" : title, "info" : info});
 
-            if (name == initialPhotoId)
+            if (name == initialStatus)
               {
                 currentPhotoIndex = photos.length - 1; 
               }
@@ -329,7 +329,7 @@ $(document).ready(function()
 
         if (photos.length > 0)
           {
-            if (initialPhotoId === "lightbox")
+            if (initialStatus === "lightbox")
               {
                 openLightBox();
               }
@@ -671,6 +671,7 @@ $(document).ready(function()
      * Initialization.
      *
      ******************************************************************************************************************************/
+    info("baseUrl: %s, initialStatus: %s", baseUrl, initialStatus);
     setupNavigationWidgets();
     fitPhotoView();
     $(window).resize(fitPhotoView); 
