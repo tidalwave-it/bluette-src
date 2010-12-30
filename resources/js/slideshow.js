@@ -336,6 +336,21 @@ $(document).ready(function()
                 scheduleNextSlide(0);
               }
           }
+        else
+          {
+            fatal("Error: no photos in this slideshow");
+          }
+      }
+      
+    /*******************************************************************************************************************************
+     *
+     * Notifies a fatal error.
+     *
+     ******************************************************************************************************************************/
+    var fatal = function (message)
+      {
+        $("#initialWaitingWidget").css({"display" : "none"});
+        $("#content").append(message);
       }
 
     /*******************************************************************************************************************************
@@ -346,13 +361,18 @@ $(document).ready(function()
     var loadCatalog = function()
       {
         info("loadCatalog()");
+        debug("Loading %s", catalogUrl);
         
         $.ajax(
           {
             type     : "GET",
             url      : catalogUrl,
             datatype : "xml",
-            success  : parseCatalog
+            success  : parseCatalog,
+            error    : function (xmlHttpRequest, textStatus, errorThrown)
+              {
+                fatal("Cannot load the catalog: " + xmlHttpRequest.responseText);
+              }
           });
       }
 
