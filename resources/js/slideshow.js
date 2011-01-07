@@ -49,7 +49,11 @@ $(document).ready(function()
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
-
+    var availWidthPercentage = 1.0;
+    var availHeightPercentage = 0.85;
+    var borderScale = 6.0 / 1920.0;
+    var captionFontSizeScale = 25.0 / 1280.0;
+    
     /*******************************************************************************************************************************
      *
      * Binds the navigation widgets to the related controller functions.
@@ -306,9 +310,9 @@ $(document).ready(function()
     var fitPhotoView = function()
       {
         info("fitPhotoView()");
-        availWidth  = Math.round($(window).width()  * 1.0);
-        availHeight = Math.round($(window).height() * 0.85);
-        border = Math.max(Math.round(availWidth * 6 / 1920), 2);
+        availWidth  = Math.round($(window).width()  * availWidthPercentage);
+        availHeight = Math.round($(window).height() * availHeightPercentage);
+        border = Math.max(Math.round(availWidth * borderScale), 2);
         debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
         $("#initialWaitingWidget").css({"width"  : availWidth, "height" : availHeight});
@@ -333,9 +337,9 @@ $(document).ready(function()
 
         $(xml).find("album > img").each(function()
           {
-            var name    = $(this).attr("src").replace(/\..*/, "");
+            var name  = $(this).attr("src").replace(/\..*/, "");
             var title = $(this).attr("title");
-            var info    = $(this).attr("caption");
+            var info  = $(this).attr("caption");
             photos.push({"name" : name, "title" : title, "info" : info});
 
             if (name == initialStatus)
@@ -425,8 +429,8 @@ $(document).ready(function()
       {
         info("computeLargestFittingSize(%d x %d, %d x %d)", component.width, component.height, container.width, container.height);
         
-        var width  = container.width - border * 2;
-        var scale  = Math.min(width / component.width, 1);
+        var width = container.width - border * 2;
+        var scale = Math.min(width / component.width, 1);
 
         if (component.height * scale > container.height)
           {
@@ -484,13 +488,10 @@ $(document).ready(function()
 
         $("#title" + containerIndex).css(
           { 
-            //"left"         : size.left, 
-            //"width"        : size.width + 2 * border, 
             "left"         : 0, 
             "width"        : availWidth,
             "top"          : top + size.height + border * 2 + border, 
-            //var captionFontSize = Math.max(Math.round(Math.max(size.width, size.height) * 27 / 1280), 6)
-            "font-size"    : Math.max(Math.round(availWidth * 25 / 1280), 6)
+            "font-size"    : Math.max(Math.round(availWidth * captionFontSizeScale), 6)
           });
       };
 
