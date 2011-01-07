@@ -315,9 +315,10 @@ $(document).ready(function()
         border = Math.max(Math.round(availWidth * borderScale), 2);
         debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
-        $("#initialWaitingWidget").css({"width"  : availWidth, "height" : availHeight});
-        $("#divimage1").css({"width"  : availWidth, "height" : availHeight});
-        $("#divimage2").css({"width"  : availWidth, "height" : availHeight});
+        var css = {"width"  : availWidth, "height" : availHeight};
+        $("#initialWaitingWidget").css(css);
+        $("#divimage1").css(css);
+        $("#divimage2").css(css);
         $("#page").css({"margin-top" : -Math.round(availHeight / 2)});
 
         if (currentPhotoIndex >= 0)
@@ -340,8 +341,15 @@ $(document).ready(function()
             var name  = $(this).attr("src").replace(/\..*/, "");
             var title = $(this).attr("title");
             var info  = $(this).attr("caption");
-            photos.push({"name" : name, "title" : title, "info" : info});
+            var photo = {"name" : name, "id" : name, "title" : title, "info" : info};
+            
+            $(sizes).each(function()
+              {
+                $(photo).attr('url' + this, getPhotoUrl(photo, this));
+              });
 
+            photos.push(photo);
+            
             if (name == initialStatus)
               {
                 currentPhotoIndex = photos.length - 1; 
@@ -550,12 +558,6 @@ $(document).ready(function()
               }
               
             showWidget("#loadingWidget", true);
-            $(photo).attr('id', photo.name); // TODO: this can be moved to initialization
-
-            $(sizes).each(function() // TODO: this can be moved to initialization
-              {
-                $(photo).attr('url' + this, getPhotoUrl(photo, this));
-              });
 
             $('<img/>').attr('src', $(photo).attr('url' + mediaSize)).load(function()
               {
