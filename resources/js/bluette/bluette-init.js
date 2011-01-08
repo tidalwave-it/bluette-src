@@ -1,0 +1,12 @@
+var catalogUrl = "images3.xml";
+var photoPrefix = "/media/stillimages/";
+var home = "/blog/";
+var titlePrefix = "Stopping Down: ";
+var slideshowSpeed = 8000;
+var sizes = [1920, 1280, 800, 400, 200];
+var thumbnailsPerRow = 10;
+var availWidthPercentage = 1.0;
+var availHeightPercentage = 0.85;
+var borderScale = 6.0 / 1920.0;
+var captionFontSizeScale = 25.0 / 1280.0;
+var logging = false;
