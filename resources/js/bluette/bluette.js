@@ -34,9 +34,24 @@
  **********************************************************************************************************************************/
 $(document).ready(function() 
   {
+//    var catalogUrl =                       catalogUrl || "images.xml";
+//    var photoPrefix =                     photoPrefix || "http://stoppingdown.net/media/stillimages/";
+//    var home =                                   home || "/";
+//    var titlePrefix =                     titlePrefix || "Bluette Demo: ";
+//    var slideshowSpeed =               slideshowSpeed || 8000;
+//    var sizes =                                 sizes || [1280, 800, 400, 200];
+//    var thumbnailsPerRow =           thumbnailsPerRow || 10;
+//    var availWidthPercentage =  availHeightPercentage || 1.0;
+//    var availHeightPercentage = availHeightPercentage || 0.85;
+//    var borderScale =                     borderScale ||  6.0 / 1920.0;
+//    var captionFontSizeScale =   captionFontSizeScale || 25.0 / 1280.0;
+//    var headerFontSizeScale =     headerFontSizeScale || 40 / 1280.0;
+//    var titleVisible =                   titleVisible || true;
+//    var logging =                             logging || false;
+      
     var photos = [];
     var activeContainer = 1;	
-    var currentContainer = 2;	
+    var currentContainer = 2;
     var currentPhotoIndex = -1;
     var currentZindex = -1;
     var availWidth;
@@ -496,7 +511,12 @@ $(document).ready(function()
             "left"         : 0, 
             "width"        : availWidth,
             "top"          : top + size.height + border * 2 + border, 
-            "font-size"    : Math.max(Math.round(availWidth * captionFontSizeScale), 6)
+            "font-size"    : Math.max(Math.round(10 * availWidth * captionFontSizeScale), 6) / 10
+          });
+          
+        $("#header").css(
+          { 
+            "font-size"    : Math.max(Math.round(10 * availWidth * headerFontSizeScale), 6) / 10
           });
       };
 
