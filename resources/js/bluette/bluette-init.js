@@ -9,4 +9,6 @@ var availWidthPercentage = 1.0;
 var availHeightPercentage = 0.85;
 var borderScale = 6.0 / 1920.0;
 var captionFontSizeScale = 25.0 / 1280.0;
+var navigationVisible = true;
+var titleVisible = true;
 var logging = false;

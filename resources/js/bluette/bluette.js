@@ -332,11 +332,12 @@ $(document).ready(function()
       {
         info("parseCatalog() - " + xml);
 
-        $(xml).find("album > img").each(function()
+        $(xml).find("album > img").each(function(i, img)
           {
-            var name  = $(this).attr("src").replace(/\..*/, "");
-            var title = $(this).attr("title");
-            var info  = $(this).attr("caption");
+            var name  = $(img).attr("src").replace(/\..*/, "");
+            var title = $(img).attr("title");
+            var info  = $(img).attr("caption");
+            
             var photo = {"name" : name, "id" : name, "title" : title, "info" : info};
             
             $(sizes).each(function()
@@ -597,7 +598,11 @@ $(document).ready(function()
                 setTimeout(function() 
                   {
                     animating = false;
-                    $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
+                    
+                    if (titleVisible)
+                      {
+                        $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
+                      }
 
                     if (playing)
                       {
