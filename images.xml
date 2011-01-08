@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Published with SlideShowPro Player for Lightroom 1.9.8.5-->
-<gallery title="StoppingDown.net" description="Gallery description">
-    <album id="Album title" lgpath="../../../../media/stillimages/1280/" tnpath="../../../../media/stillimages/thumb/" popuppath="../../../../media/stillimages/popup/" fspath="../../../../media/stillimages/1920/" title="Album title" description="Album description" tn="../../../../media/stillimages/images/20100102-0022.jpg" audio="" audiotitle="">
+<gallery>
+    <album> 
         <img src="20100102-0022.jpg" caption="" title="Nuages sur le Île Saint-Honorat" pause=""></img>
         <img src="20100102-0001.jpg" caption="" title="Moutons autour de l'Île Saint-Honorat" pause=""></img>
         <img src="20100102-0002.jpg" caption="" title="Île Sainte-Marguerite vu de Pointe de l'Aiguille" pause=""></img>

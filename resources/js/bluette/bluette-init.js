@@ -1,9 +1,9 @@
-var catalogUrl = "images3.xml";
-var photoPrefix = "/media/stillimages/";
-var home = "/blog/";
-var titlePrefix = "Stopping Down: ";
+var catalogUrl = "images.xml";
+var photoPrefix = "http://stoppingdown.net/media/stillimages/";
+var home = "/";
+var titlePrefix = "Bluette Demo: ";
 var slideshowSpeed = 8000;
-var sizes = [1920, 1280, 800, 400, 200];
+var sizes = [1280, 800, 400, 200];
 var thumbnailsPerRow = 10;
 var availWidthPercentage = 1.0;
 var availHeightPercentage = 0.85;
