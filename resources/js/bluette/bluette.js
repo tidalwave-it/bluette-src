@@ -347,11 +347,12 @@ $(document).ready(function()
       {
         info("parseCatalog() - " + xml);
 
-        $(xml).find("album > img").each(function(i, img)
+        $(xml).find("img").each(function(i, img)
           {
-            var name  = $(img).attr("src").replace(/\..*/, "");
-            var title = $(img).attr("title");
-            var info  = $(img).attr("caption");
+            var $img  = $(img);
+            var name  = $img.attr("src").replace(/\..*/, "");
+            var title = $img.attr("title");
+            var info  = $img.attr("caption");
             
             var photo = {"name" : name, "id" : name, "title" : title, "info" : info};
             
@@ -370,21 +371,18 @@ $(document).ready(function()
           
         debug("loaded %s items", photos.length);
 
-        if (photos.length > 0)
+        if (photos.length == 0)
           {
-            if (initialStatus === "lightbox")
-              {
-                openLightBox();
-              }
-            else
-              {
-                currentPhotoIndex = Math.max(currentPhotoIndex,  0) - 1; // scheduleNextSlide will increment it
-                scheduleNextSlide(0);
-              }
+            fatal("Error: no photos in this slideshow");
+          }
+        else if (initialStatus === "lightbox")
+          {
+            openLightBox();
           }
         else
           {
-            fatal("Error: no photos in this slideshow");
+            currentPhotoIndex = Math.max(currentPhotoIndex,  0) - 1; // scheduleNextSlide will increment it
+            scheduleNextSlide(0);
           }
       };
       
@@ -576,7 +574,9 @@ $(document).ready(function()
               
             showWidget("#loadingWidget", true);
 
-            $('<img/>').attr('src', $(photo).attr('url' + mediaSize)).load(function()
+            var img = $('<img/>');
+            img.attr('src', $(photo).attr('url' + mediaSize));
+            img.load(function()
               {
                 debug("media sized %d loaded", mediaSize);
                 $(photo).attr('loaded' + mediaSize, true)
