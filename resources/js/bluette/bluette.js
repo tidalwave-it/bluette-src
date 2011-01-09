@@ -433,7 +433,8 @@ $(document).ready(function()
           {
             currentContainer = activeContainer;
             activeContainer = 3 - activeContainer;
-            currentPhotoIndex = (currentPhotoIndex + direction) % photos.length;
+            // adding photos.length to avoid negative range
+            currentPhotoIndex = (currentPhotoIndex + direction + photos.length) % photos.length;
             showCurrentPhoto();
           }
       };
