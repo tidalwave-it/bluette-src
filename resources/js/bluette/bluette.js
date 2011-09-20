@@ -128,7 +128,7 @@ $(document).ready(function()
               {
                 slideShowVisible = false;
                 $("#initialWaitingWidget").css({"display" : "none"});
-                location.href = baseUrl + "#lightbox";
+                location.href = baseUrl + "#!/lightbox";
 
                 $("#lightbox").fadeIn(function()
                   {
