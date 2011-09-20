@@ -58,14 +58,14 @@ $(document).ready(function()
     var availHeight;
     var border;
     var animating = false;
-    var compatibilityUrl = location.href.replace(/#!\/, "#");
+    var compatibilityUrl = location.href.replace(/#!\//, "#");
     var baseUrl = compatibilityUrl.replace(/#.*/, "");
     var initialStatus = compatibilityUrl.replace(/.*#/, "").replace(baseUrl, "");
     var playing = initialStatus === "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
-  
+ 
     if (!playing)
       {
         location.href = compatibilityUrl.replace(/#/, "#!/");
