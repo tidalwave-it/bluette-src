@@ -58,13 +58,15 @@ $(document).ready(function()
     var availHeight;
     var border;
     var animating = false;
-    var baseUrl = location.href.replace(/#.*/, "");
-    var initialStatus = location.href.replace(/.*#/, "").replace(baseUrl, "");
+    var compatibilityUrl = location.href.replace(/#!/, "#");
+    location.href = compatibilityUrl.replace(/#/, "#!");
+    var baseUrl = compatibilityUrl.replace(/#.*/, "");
+    var initialStatus = compatibilityUrl.replace(/.*#/, "").replace(baseUrl, "");
     var playing = initialStatus === "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
-    
+   
     /*******************************************************************************************************************************
      *
      * Binds the navigation widgets to the related controller functions.
@@ -236,7 +238,7 @@ $(document).ready(function()
     var updateUrl = function()
       {
         info("updateUrl()");
-        location.href = baseUrl + "#" + photos[currentPhotoIndex].id;        
+        location.href = baseUrl + "#!" + photos[currentPhotoIndex].id;        
         document.title = titlePrefix + getCurrentTitle();
       };
       
