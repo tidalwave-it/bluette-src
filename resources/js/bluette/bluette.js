@@ -58,7 +58,7 @@ $(document).ready(function()
     var availHeight;
     var border;
     var animating = false;
-    var compatibilityUrl = location.href.replace(/#!/, "#");
+    var compatibilityUrl = location.href.replace(/#!\/, "#");
     var baseUrl = compatibilityUrl.replace(/#.*/, "");
     var initialStatus = compatibilityUrl.replace(/.*#/, "").replace(baseUrl, "");
     var playing = initialStatus === "";
@@ -68,7 +68,7 @@ $(document).ready(function()
   
     if (!playing)
       {
-        location.href = compatibilityUrl.replace(/#/, "#!");
+        location.href = compatibilityUrl.replace(/#/, "#!/");
       }
  
     /*******************************************************************************************************************************
@@ -242,7 +242,7 @@ $(document).ready(function()
     var updateUrl = function()
       {
         info("updateUrl()");
-        location.href = baseUrl + "#!" + photos[currentPhotoIndex].id;        
+        location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
         document.title = titlePrefix + getCurrentTitle();
       };
       
