@@ -351,7 +351,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var parseCatalog = function (xml)
       {
-        info("parseCatalog() - " + xml);
+        info("parseCatalog() - ", xml);
 
         $(xml).find("img").each(function(i, img)
           {
