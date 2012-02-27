@@ -12,4 +12,5 @@ var bluetteCaptionFontSizeScale = 25.0 / 1280.0;
 var bluetteHeaderFontSizeScale = 40 / 1280.0;
 var bluetteNavigationVisible = true;
 var bluetteTitleVisible = true;
+var bluetteShuffle = false;
 var logging = false;

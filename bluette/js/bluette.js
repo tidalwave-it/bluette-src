@@ -382,6 +382,11 @@ $(document).ready(function()
           });
           
         debug("loaded %s items", photos.length);
+        
+        if (bluetteShuffle)
+          {
+            $($.shuffle(photos));
+          }
 
         if (photos.length == 0)
           {
