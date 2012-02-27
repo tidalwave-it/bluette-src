@@ -34,20 +34,20 @@
  **********************************************************************************************************************************/
 $(document).ready(function() 
   {
-//    var catalogUrl =                       catalogUrl || "images.xml";
-//    var photoPrefix =                     photoPrefix || "http://stoppingdown.net/media/stillimages/";
-//    var home =                                   home || "/";
-//    var titlePrefix =                     titlePrefix || "Bluette Demo: ";
-//    var slideshowSpeed =               slideshowSpeed || 8000;
-//    var sizes =                                 sizes || [1280, 800, 400, 200];
-//    var thumbnailsPerRow =           thumbnailsPerRow || 10;
-//    var availWidthPercentage =  availHeightPercentage || 1.0;
-//    var availHeightPercentage = availHeightPercentage || 0.85;
-//    var borderScale =                     borderScale ||  6.0 / 1920.0;
-//    var captionFontSizeScale =   captionFontSizeScale || 25.0 / 1280.0;
-//    var headerFontSizeScale =     headerFontSizeScale || 40 / 1280.0;
-//    var titleVisible =                   titleVisible || true;
-//    var logging =                             logging || false;
+//    var bluetteCatalogUrl =                       bluetteCatalogUrl || "images.xml";
+//    var bluettePhotoPrefix =                     bluettePhotoPrefix || "http://stoppingdown.net/media/stillimages/";
+//    var bluetteHome =                                   bluetteHome || "/";
+//    var bluetteTitlePrefix =                     bluetteTitlePrefix || "Bluette Demo: ";
+//    var bluetteSlideshowSpeed =               bluetteSlideshowSpeed || 8000;
+//    var bluettePhotoSizes =                       bluettePhotoSizes || [1280, 800, 400, 200];
+//    var bluetteThumbnailsPerRow =           bluetteThumbnailsPerRow || 10;
+//    var bluetteAvailWidthPercentage =  bluetteAvailHeightPercentage || 1.0;
+//    var bluetteAvailHeightPercentage = bluetteAvailHeightPercentage || 0.85;
+//    var bluetteBorderScale =                     bluetteBorderScale ||  6.0 / 1920.0;
+//    var bluetteCaptionFontSizeScale =   bluetteCaptionFontSizeScale || 25.0 / 1280.0;
+//    var bluetteHeaderFontSizeScale =     bluetteHeaderFontSizeScale || 40 / 1280.0;
+//    var bluetteTitleVisible =                   bluetteTitleVisible || true;
+//    var logging =                                           logging || false;
       
     var photos = [];
     var activeContainer = 1;	
@@ -155,7 +155,7 @@ $(document).ready(function()
     var loadThumbnails = function()
       {
         info("loadThumbnails()");
-        var mediaSize = Math.round(availWidth / thumbnailsPerRow);
+        var mediaSize = Math.round(availWidth / bluetteThumbnailsPerRow);
         thumbnailsLoaded = true;
         var index = 0;
         
@@ -249,12 +249,12 @@ $(document).ready(function()
       {
         info("updateUrl()");
         location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
-        document.title = titlePrefix + getCurrentTitle();
+        document.title = bluetteTitlePrefix + getCurrentTitle();
       };
       
     /*******************************************************************************************************************************
      *
-     * Goes to the home page.
+     * Goes to the bluetteHome page.
      *
      ******************************************************************************************************************************/
     var goHome = function()
@@ -264,7 +264,7 @@ $(document).ready(function()
           {
             setTimeout(function() 
               {
-                location.href = home; 
+                location.href = bluetteHome; 
               }, 500);
           });
       };
@@ -333,9 +333,9 @@ $(document).ready(function()
     var fitPhotoView = function()
       {
         info("fitPhotoView()");
-        availWidth  = Math.round($(window).width()  * availWidthPercentage);
-        availHeight = Math.round($(window).height() * availHeightPercentage);
-        border = Math.max(Math.round(availWidth * borderScale), 2);
+        availWidth  = Math.round($(window).width()  * bluetteAvailWidthPercentage);
+        availHeight = Math.round($(window).height() * bluetteAvailHeightPercentage);
+        border = Math.max(Math.round(availWidth * bluetteBorderScale), 2);
         debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
 
         var css = {"width"  : availWidth, "height" : availHeight};
@@ -368,7 +368,7 @@ $(document).ready(function()
             
             var photo = {"name" : name, "id" : name, "title" : title, "info" : info};
             
-            $(sizes).each(function()
+            $(bluettePhotoSizes).each(function()
               {
                 $(photo).attr('url' + this, getPhotoUrl(photo, this));
               });
@@ -417,12 +417,12 @@ $(document).ready(function()
     var loadCatalog = function()
       {
         info("loadCatalog()");
-        debug("Loading %s", catalogUrl);
+        debug("Loading %s", bluetteCatalogUrl);
         
         $.ajax(
           {
             type     : "GET",
-            url      : catalogUrl,
+            url      : bluetteCatalogUrl,
             datatype : "xml",
             success  : parseCatalog,
             error    : function (xmlHttpRequest, textStatus, errorThrown)
@@ -522,12 +522,12 @@ $(document).ready(function()
             "left"         : 0, 
             "width"        : availWidth,
             "top"          : top + size.height + border * 2 + border, 
-            "font-size"    : Math.max(Math.round(10 * availWidth * captionFontSizeScale), 6) / 10
+            "font-size"    : Math.max(Math.round(10 * availWidth * bluetteCaptionFontSizeScale), 6) / 10
           });
           
         $("#header").css(
           { 
-            "font-size"    : Math.max(Math.round(10 * availWidth * headerFontSizeScale), 6) / 10
+            "font-size"    : Math.max(Math.round(10 * availWidth * bluetteHeaderFontSizeScale), 6) / 10
           });
       };
 
@@ -538,7 +538,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var getPhotoUrl = function (photo, size)
       {
-        return photoPrefix + size + "/" + photo.name + ".jpg";
+        return bluettePhotoPrefix + size + "/" + photo.name + ".jpg";
       };
       
     /*******************************************************************************************************************************
@@ -548,9 +548,9 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var computeMediaSize = function (neededSize)
       {
-        var loadedSize = sizes[0];
+        var loadedSize = bluettePhotoSizes[0];
 
-        $(sizes).each(function()
+        $(bluettePhotoSizes).each(function()
           {
             if (neededSize <= this)
               {
@@ -632,14 +632,14 @@ $(document).ready(function()
                   {
                     animating = false;
                     
-                    if (titleVisible)
+                    if (bluetteTitleVisible)
                       {
                         $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
                       }
 
                     if (playing)
                       {
-                        scheduleNextSlide(slideshowSpeed);
+                        scheduleNextSlide(bluetteSlideshowSpeed);
                       }
                   }, 500);
               });
