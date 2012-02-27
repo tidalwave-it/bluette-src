@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"> 
-<!-- $Id$ -->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title>@TITLE</title>
+    <!-- $Id$ -->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <title>@TITLE</title>
 
-    <style type="text/css" media="screen">
-      @import url("/resources/css/bluette.css");
-    </style>
+        <style type="text/css" media="screen">
+            @import url("/resources/css/bluette.css");
+        </style>
 
-    <script type="text/javascript" src="/resources/js/jquery/1.4.2/jquery-1.4.2.min.js"></script>
-    <script type="text/javascript" src="/resources/js/bluette/bluette-init.js"></script>
-    <script type="text/javascript" src="/resources/js/bluette/bluette.js"></script>
-  </head>
-  
-  <body>
-    <div id="page">
-      <div id="content">
-        <div id="initialWaitingWidget"></div>
-        <div id="slideshow">
-          <div id="navigationWidgets">
-            <a id="navigationPreviousWidget" href="@PREVIOUS"></a>
-            <a id="navigationLightBoxWidget" href="@LIGHTBOX"></a>
-            <a id="navigationHomeWidget" href="@HOME"></a>
-            <a id="navigationPauseWidget"></a>
-            <a id="navigationPlayWidget"></a>
-            <a id="navigationNextWidget" href="@NEXT"></a>
-          </div>
-          <div id="imageRenderer">
-            <div id="divimage1"><img id="image1" /></div>
-            <div id="divimage2"><img id="image2" /></div>
-            <div id="imageOverlay">
-              <div id="header">@HEADER</div>
-              <div id="waitingWidget"></div>
-              <div id="loadingWidget"></div>
+        <script type="text/javascript" src="/resources/js/jquery/1.4.2/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/resources/js/bluette/bluette-init.js"></script>
+        <script type="text/javascript" src="/resources/js/bluette/bluette.js"></script>
+    </head>
+
+    <body>
+        <div id="page">
+            <div id="content">
+                <div id="initialWaitingWidget"></div>
+                <div id="slideshow">
+                    <div id="navigationWidgets">
+                        <a id="navigationPreviousWidget" href="@PREVIOUS"></a>
+                        <a id="navigationLightBoxWidget" href="@LIGHTBOX"></a>
+                        <a id="navigationHomeWidget" href="@HOME"></a>
+                        <a id="navigationPauseWidget"></a>
+                        <a id="navigationPlayWidget"></a>
+                        <a id="navigationNextWidget" href="@NEXT"></a>
+                    </div>
+                    <div id="imageRenderer">
+                        <div id="divimage1"><img id="image1" /></div>
+                        <div id="divimage2"><img id="image2" /></div>
+                        <div id="imageOverlay">
+                            <div id="header">@HEADER</div>
+                            <div id="waitingWidget"></div>
+                            <div id="loadingWidget"></div>
+                        </div>
+                    </div>
+                    <div id="title1"></div>
+                    <div id="title2"></div>
+                    <div id="copyright">@COPYRIGHT</div>
+                </div>
+                <div id="lightbox">
+                    <a id="navigationCloseWidget"></a>
+                    <div id="thumbnails"></div>
+                </div>
             </div>
-          </div>
-          <div id="title1"></div>
-          <div id="title2"></div>
-          <div id="copyright">@COPYRIGHT</div>
         </div>
-        <div id="lightbox">
-            <a id="navigationCloseWidget"></a>
-            <div id="thumbnails"></div>
-        </div>
-      </div>
-    </div>
-  </body>
+    </body>
 </html>
