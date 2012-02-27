@@ -359,14 +359,14 @@ $(document).ready(function()
       {
         info("parseCatalog() - ", xml);
 
-        $(xml).find("img").each(function(i, img)
+        $(xml).find("stillImage").each(function(i, img)
           {
             var $img  = $(img);
-            var name  = $img.attr("src").replace(/\..*/, "");
+            var id    = $img.attr("id");
             var title = $img.attr("title");
             var info  = $img.attr("caption");
             
-            var photo = {"name" : name, "id" : name, "title" : title, "info" : info};
+            var photo = {"name" : id, "id" : id, "title" : title, "info" : info};
             
             $(bluettePhotoSizes).each(function()
               {
@@ -375,7 +375,7 @@ $(document).ready(function()
 
             photos.push(photo);
             
-            if (name == initialStatus)
+            if (id == initialStatus)
               {
                 currentPhotoIndex = photos.length - 1; 
               }
