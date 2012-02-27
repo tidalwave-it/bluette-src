@@ -88,6 +88,11 @@ $(document).ready(function()
         $("#navigationPlayWidget").click(play);
         $("#navigationPauseWidget").click(pause);
 
+        $("#navigationPreviousWidget").removeAttr("href");
+        $("#navigationNextWidget").removeAttr("href");
+        $("#navigationLightBoxWidget").removeAttr("href");
+        $("#navigationHomeWidget").removeAttr("href");
+        
         updateWidgetsVisibility();
       };
       

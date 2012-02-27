@@ -155,8 +155,8 @@ body
 #navigationPreviousWidget, #navigationNextWidget, #navigationLightBoxWidget, #navigationHomeWidget, #navigationPlayWidget, #navigationPauseWidget
   {
     display:         none;
-    width:           2px;
-    height:          2px; 
+    width:           16px;
+    height:          16px; 
     padding:         4px 8px 4px 8px;
     cursor:          pointer;
   }
@@ -193,8 +193,9 @@ body
 
 #navigationCloseWidget
   {
-    width:           20px;
-    height:          20px;
+    width:           16px;
+    height:          16px; 
+    padding:         4px 8px 4px 8px;
     cursor:          pointer;
     background:      url(/media/graphics/Closed.png) no-repeat center;
   }
