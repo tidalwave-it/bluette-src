@@ -92,6 +92,7 @@ $(document).ready(function()
         $("#navigationNextWidget").removeAttr("href");
         $("#navigationLightBoxWidget").removeAttr("href");
         $("#navigationHomeWidget").removeAttr("href");
+        $("#navigationCloseWidget").removeAttr("href");
         
         updateWidgetsVisibility();
       };
