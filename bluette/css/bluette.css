@@ -25,7 +25,7 @@ html, body
 
 body
   {
-    background:      url(/media/graphics/marble25.jpg) repeat;
+    background:      url(../graphics/marble25.jpg) repeat;
   }
 
 #page
@@ -84,7 +84,7 @@ body
     height:          150px; 
     margin:          0px auto; 
     z-index:         10; 
-    background:      url(/media/graphics/StoppingDown_Transparent.png) no-repeat right
+    background:      url(../graphics/StoppingDown_Transparent.png) no-repeat right
   }
 
 #imageRenderer
@@ -99,7 +99,7 @@ body
     left:            0px;
     top:             0px;
     /* background:      #000000; */
-    background:      url(/media/graphics/marble25.jpg) repeat;
+    background:      url(../graphics/marble25.jpg) repeat;
   }
 
 #image1, #image2
@@ -122,7 +122,7 @@ body
     left:            0px;
     top:             0px;
     z-index:         15;
-    background:      url(/media/graphics/big-snake.gif) no-repeat center;
+    background:      url(../graphics/big-snake.gif) no-repeat center;
   }
 
 #waitingWidget, #loadingWidget
@@ -138,12 +138,12 @@ body
 
 #loadingWidget
   {
-    background:      url(/media/graphics/linear-spinner.gif) no-repeat right;
+    background:      url(../graphics/linear-spinner.gif) no-repeat right;
   }
 
 #waitingWidget
   {
-    background:      url(/media/graphics/Clock.png) no-repeat right;
+    background:      url(../graphics/Clock.png) no-repeat right;
   }
 
 #navigationWidgets
@@ -163,32 +163,32 @@ body
 
 #navigationPreviousWidget
   {
-    background:      url(/media/graphics/Reverse.png) no-repeat center;
+    background:      url(../graphics/Reverse.png) no-repeat center;
   }
 
 #navigationNextWidget
   {
-    background:      url(/media/graphics/Forward.png) no-repeat center;
+    background:      url(../graphics/Forward.png) no-repeat center;
   }
 
 #navigationLightBoxWidget
   {
-    background:      url(/media/graphics/Globe.png) no-repeat center;
+    background:      url(../graphics/Globe.png) no-repeat center;
   }
 
 #navigationHomeWidget
   {
-    background:      url(/media/graphics/Home.png) no-repeat center;
+    background:      url(../graphics/Home.png) no-repeat center;
   }
 
 #navigationPlayWidget
   {
-    background:      url(/media/graphics/Play.png) no-repeat center;
+    background:      url(../graphics/Play.png) no-repeat center;
   }
 
 #navigationPauseWidget
   {
-    background:      url(/media/graphics/Pause.png) no-repeat center;
+    background:      url(../graphics/Pause.png) no-repeat center;
   }
 
 #navigationCloseWidget
@@ -197,7 +197,7 @@ body
     height:          16px; 
     padding:         4px 8px 4px 8px;
     cursor:          pointer;
-    background:      url(/media/graphics/Closed.png) no-repeat center;
+    background:      url(../graphics/Closed.png) no-repeat center;
   }
 
 #lightbox #thumbnails img
