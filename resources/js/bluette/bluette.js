@@ -3,7 +3,7 @@
  * bluette - open source media presentation
  * ========================================
  *
- * Copyright (C) 2010-2011 by Fabrizio Giudici
+ * Copyright (C) 2010-2012 by Fabrizio Giudici
  * Project home page: http://bluette.kenai.com
  *
  ***********************************************************************************************************************************
