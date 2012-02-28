@@ -48,7 +48,16 @@ $(document).ready(function()
 //    var bluetteHeaderFontSizeScale =     bluetteHeaderFontSizeScale || 40 / 1280.0;
 //    var bluetteTitleVisible =                   bluetteTitleVisible || true;
 //    var logging =                                           logging || false;
-      
+
+    var settings = 
+      {
+        showArrows: true
+      };
+
+    var scrollPane = $('#thumbnails')
+    scrollPane.jScrollPane(settings);
+    var scrollPaneApi = scrollPane.data('jsp');        
+
     var photos = [];
     var activeContainer = 1;	
     var currentContainer = 2;
@@ -167,7 +176,7 @@ $(document).ready(function()
             
             var img = $('<img/>').attr('src', url)
                                  .css({'display' : 'none'})
-                                 .appendTo($("#thumbnails"))
+                                 .appendTo(scrollPaneApi.getContentPane())
                                  .click(function()
                                     {
                                       goToPhoto(thisIndex);
@@ -189,7 +198,8 @@ $(document).ready(function()
                   });
  
                 $(this).attr('width', size.width).attr('height', size.height).fadeIn();
-              });              
+                scrollPaneApi.reinitialise();
+              });      
           });
       };
       
@@ -348,6 +358,8 @@ $(document).ready(function()
           {
             fitPhoto(photos[currentPhotoIndex], activeContainer);
           }
+          
+        $("#thumbnails").css({"height" : availHeight})
       };
 
     /*******************************************************************************************************************************

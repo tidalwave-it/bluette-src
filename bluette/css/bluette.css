@@ -2,6 +2,7 @@
 
 /*@import url(http://fonts.googleapis.com/css?family=Josefin+Sans);*/
 @import url(http://fonts.googleapis.com/css?family=Tangerine);
+@import url(../js/jScrollPane/2.0.0beta11/jquery.jscrollpane.css);
 
 ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input
   {
@@ -200,6 +201,14 @@ body
     background:      url(../graphics/Closed.png) no-repeat center;
   }
 
+#lightbox #thumbnails
+  {  
+    margin-right:    20px;
+    width:           100%;
+/*    height: auto;*/
+    overflow:        auto;  
+  }
+
 #lightbox #thumbnails img
   {
     padding:         4px 4px 4px 4px;
@@ -232,4 +241,35 @@ body
 #copyright span
   {
     margin-left:     20px;
+  }
+
+.jspVerticalBar
+  {
+    width:           8px;
+    background:      none;
+  }
+
+.jspArrow 
+  {
+    height:          8px !important;
+  }
+
+.jspTrack, .jspArrow
+  {
+    background:      #202020;
+  }
+
+.jspVerticalBar>.jspDisabled,
+.jspVerticalBar>.jspDisabled:hover
+  {
+    background:      #404040;
+  }
+
+
+.jspDrag, .jspArrow
+  {
+    background:      #404040;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
   }
