@@ -386,11 +386,6 @@ $(document).ready(function()
               });
 
             photos.push(photo);
-            
-            if (id == initialStatus)
-              {
-                currentPhotoIndex = photos.length - 1; 
-              }
           });
           
         debug("loaded %s items", photos.length);
@@ -399,6 +394,15 @@ $(document).ready(function()
           {
             $($.shuffle(photos));
           }
+          
+        $(photos).each(function(i, photo)
+          {
+            if (photo.id == initialStatus)
+              {
+                currentPhotoIndex = i; 
+                debug("Initial photo index: %d", i);
+              }
+          });
 
         if (photos.length == 0)
           {
