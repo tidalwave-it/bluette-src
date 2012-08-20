@@ -69,11 +69,12 @@ $(document).ready(function()
     var animating = false;
     var compatibilityUrl = location.href.replace(/#!\//, "#");
     var baseUrl = compatibilityUrl.replace(/#.*/, "");
-    var initialStatus = compatibilityUrl.replace(/.*#/, "").replace(baseUrl, "");
+    var initialStatus = compatibilityUrl.replace(/.*#/, "").replace(baseUrl, "").replace(/\/*\?.*$/, "");
     var playing = initialStatus === "";
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
+    info(">>> initialStatus: %s", initialStatus);
  
     if (!playing)
       {
