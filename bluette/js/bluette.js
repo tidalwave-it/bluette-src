@@ -360,7 +360,7 @@ $(document).ready(function()
             fitPhoto(photos[currentPhotoIndex], activeContainer);
           }
           
-        $("#thumbnails").css({"height" : availHeight})
+        $("#thumbnails").css({"height" : availHeight});
       };
 
     /*******************************************************************************************************************************
