@@ -54,7 +54,7 @@ $(document).ready(function()
         showArrows: true
       };
 
-    var scrollPane = $('#thumbnails')
+    var scrollPane = $('#thumbnails');
     scrollPane.jScrollPane(settings);
     var scrollPaneApi = scrollPane.data('jsp');        
 
