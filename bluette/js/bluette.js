@@ -48,6 +48,7 @@ $(document).ready(function()
 //    var bluetteHeaderFontSizeScale =     bluetteHeaderFontSizeScale || 40 / 1280.0;
 //    var bluetteTitleVisible =                   bluetteTitleVisible || true;
 //    var logging =                                           logging || false;
+//    bluetteShowProgressIcons = (typeof bluetteShowProgressIcons === 'undefined') ? true : bluetteShowProgressIcons;
 
     var settings = 
       {
@@ -607,7 +608,7 @@ $(document).ready(function()
                 $("#initialWaitingWidget").fadeIn();
               }
               
-            showWidget("#loadingWidget", true);
+            showWidget("#loadingWidget", bluetteShowProgressIcons);
 
             var img = $('<img/>');
             img.attr('src', $(photo).attr('url' + mediaSize));
@@ -645,7 +646,7 @@ $(document).ready(function()
                 "z-index" : --currentZindex
               });
 
-            showWidget("#loadingWidget", false);
+            showWidget("#loadingWidget", false);            
             $("#title" + currentContainer).fadeOut();
             $("#divimage" + currentContainer).fadeOut(function() 
               {
@@ -695,7 +696,7 @@ $(document).ready(function()
       {
         info("scheduleNextSlide(%d)", delay);
         
-        if (delay > 100)
+        if (bluetteShowProgressIcons && (delay > 100))
           {
             $("#waitingWidget").fadeIn();
           }
