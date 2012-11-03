@@ -591,7 +591,8 @@ $(document).ready(function()
         
         if (!$(photo).attr('loaded' + mediaSize))
           {
-            debug("media sized %d not loaded yet", mediaSize);
+            var imageUrl = $(photo).attr('url' + mediaSize);
+            debug("media not loaded yet: %s", imageUrl);
 
             if (!slideShowVisible)
               {
@@ -600,11 +601,12 @@ $(document).ready(function()
               
             showWidget("#loadingWidget", bluetteShowProgressIcons);
 
-            var img = $('<img/>');
-            img.attr('src', $(photo).attr('url' + mediaSize));
+            var img = $('<img/>'); // FIXME: perhaps this gets lots because it's reloaded
+            img.attr('src', imageUrl);
+            debug("loading %s ...", imageUrl);
             img.load(function()
               {
-                debug("media sized %d loaded", mediaSize);
+                debug("media loaded: %s", imageUrl);
                 $(photo).attr('loaded' + mediaSize, true)
                         .attr('width',              this.width)
                         .attr('height',             this.height);
@@ -614,7 +616,7 @@ $(document).ready(function()
 
         else
           {
-            debug("media sized %d already loaded", mediaSize);
+            debug("media already loaded: %s", imageUrl);
 
             if (!slideShowVisible)
               {
