@@ -551,7 +551,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     var getPhotoUrl = function (photo, size)
       {
-        return bluettePhotoPrefix + size + "/" + photo.name + ".jpg";
+        return bluettePhotoPrefix + photo.name + "/" +  size + "/image.jpg";
       };
       
     /*******************************************************************************************************************************
