@@ -74,8 +74,8 @@ $(document).ready(function()
     var schedulerTimer = null;
     var thumbnailsLoaded = false;
     var slideShowVisible = false;
-    info(">>> initialStatus: %s", initialStatus);
- 
+    var devicePixelRatio = window.devicePixelRatio ? window.devicePixelRatio : 1;    
+    
     if (!playing)
       {
         location.href = compatibilityUrl.replace(/#/, "#!/");
@@ -347,7 +347,7 @@ $(document).ready(function()
         availWidth  = Math.round($(window).width()  * bluetteAvailWidthPercentage);
         availHeight = Math.round($(window).height() * bluetteAvailHeightPercentage);
         border = Math.max(Math.round(availWidth * bluetteBorderScale), 2);
-        debug("available size: %d x %d, border: %d", availWidth, availHeight, border);
+        debug("available size on screen: %d x %d, border: %d", availWidth, availHeight, border);
 
         var css = {"width"  : availWidth, "height" : availHeight};
         $("#initialWaitingWidget").css(css);
@@ -574,12 +574,13 @@ $(document).ready(function()
 
         $(bluettePhotoSizes).each(function()
           {
-            if (neededSize <= this)
+            if (neededSize * devicePixelRatio <= this)
               {
                 loadedSize = this;
               }
           });
 
+        debug("neededSize: %d, loadedSize: %d", neededSize, loadedSize);
         return loadedSize;
       };
       
@@ -596,7 +597,6 @@ $(document).ready(function()
         var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var mediaSize = computeMediaSize(neededSize);
-        debug("neededSize: %d", neededSize);
         
         if (!$(photo).attr('loaded' + mediaSize))
           {
@@ -749,7 +749,8 @@ $(document).ready(function()
      * Initialization.
      *
      ******************************************************************************************************************************/
-    info("baseUrl: %s, initialStatus: %s", baseUrl, initialStatus);
+    info("baseUrl: %s, initialStatus: %s, devicePixelRatio: %d", baseUrl, initialStatus, devicePixelRatio);
+ 
     setupNavigationWidgets();
     fitPhotoView();
     $(window).resize(fitPhotoView); 
