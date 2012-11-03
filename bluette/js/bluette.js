@@ -49,6 +49,8 @@ $(document).ready(function()
 //    var bluetteTitleVisible =                   bluetteTitleVisible || true;
 //    var logging =                                           logging || false;
 //    bluetteShowProgressIcons = (typeof bluetteShowProgressIcons === 'undefined') ? true : bluetteShowProgressIcons;
+//    bluetteUpdateUrl
+//    bluetteUpdateTitle
 
     var settings = 
       {
@@ -250,18 +252,6 @@ $(document).ready(function()
                 scheduleNextSlide(0);
               }, 500);
           });
-      };
-
-    /*******************************************************************************************************************************
-     *
-     * Update the Url with the current photo id.
-     *
-     ******************************************************************************************************************************/
-    var updateUrl = function()
-      {
-        info("updateUrl()");
-        location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
-        document.title = bluetteTitlePrefix + getCurrentTitle();
       };
       
     /*******************************************************************************************************************************
@@ -650,7 +640,16 @@ $(document).ready(function()
             $("#title" + currentContainer).fadeOut();
             $("#divimage" + currentContainer).fadeOut(function() 
               {
-                updateUrl();
+                if (bluetteUpdateUrl)
+                  {
+                    location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
+                  }
+                  
+                if (bluetteUpdateTitle)
+                  {
+                    document.title = bluetteTitlePrefix + getCurrentTitle();
+                  }
+                
                 setTimeout(function() 
                   {
                     animating = false;
