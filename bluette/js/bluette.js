@@ -398,14 +398,14 @@ $(document).ready(function()
           
         $(photos).each(function(i, photo)
           {
-            if (photo.id == initialStatus)
+            if (photo.id === initialStatus)
               {
                 currentPhotoIndex = i; 
                 debug("Initial photo index: %d", i);
               }
           });
 
-        if (photos.length == 0)
+        if (photos.length === 0)
           {
             fatal("Error: no photos in this slideshow");
           }
