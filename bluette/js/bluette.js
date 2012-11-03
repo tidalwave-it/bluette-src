@@ -588,10 +588,10 @@ $(document).ready(function()
         var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var mediaSize = computeMediaSize(neededSize);
+        var imageUrl = $(photo).attr('url' + mediaSize);
         
         if (!$(photo).attr('loaded' + mediaSize))
           {
-            var imageUrl = $(photo).attr('url' + mediaSize);
             debug("media not loaded yet: %s", imageUrl);
 
             if (!slideShowVisible)
@@ -601,12 +601,13 @@ $(document).ready(function()
               
             showWidget("#loadingWidget", bluetteShowProgressIcons);
 
-            var img = $('<img/>'); // FIXME: perhaps this gets lots because it's reloaded
+            var img = $('<img/>'); // FIXME: perhaps this gets lost because it's reloaded
             img.attr('src', imageUrl);
             debug("loading %s ...", imageUrl);
             img.load(function()
               {
                 debug("media loaded: %s", imageUrl);
+//                $("#image" + activeContainer).attr('src', imageUrl);
                 $(photo).attr('loaded' + mediaSize, true)
                         .attr('width',              this.width)
                         .attr('height',             this.height);
