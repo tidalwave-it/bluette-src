@@ -563,11 +563,11 @@ $(document).ready(function()
       {
         var loadedSize = bluettePhotoSizes[0];
 
-        $(bluettePhotoSizes).each(function()
+        $(bluettePhotoSizes).each(function(i, value)
           {
-            if (neededSize * devicePixelRatio <= this)
+            if (neededSize * devicePixelRatio <= value)
               {
-                loadedSize = this;
+                loadedSize = 0 + value; // 0 + forces conversion to int
               }
           });
 
