@@ -588,87 +588,105 @@ $(document).ready(function()
         var photo = photos[currentPhotoIndex];
         var neededSize = Math.max(availWidth - 2 * border, availHeight - 2 * border);
         var mediaSize = computeMediaSize(neededSize);
-        var imageUrl = $(photo).attr('url' + mediaSize);
         
         if (!$(photo).attr('loaded' + mediaSize))
           {
-            debug("media not loaded yet: %s", imageUrl);
-
-            if (!slideShowVisible)
-              {
-                $("#initialWaitingWidget").fadeIn();
-              }
-              
-            showWidget("#loadingWidget", bluetteShowProgressIcons);
-
-            var img = $('<img/>'); // FIXME: perhaps this gets lost because it's reloaded
-            img.attr('src', imageUrl);
-            debug("loading %s ...", imageUrl);
-            img.load(function()
-              {
-                debug("media loaded: %s", imageUrl);
-//                $("#image" + activeContainer).attr('src', imageUrl);
-                $(photo).attr('loaded' + mediaSize, true)
-                        .attr('width',              this.width)
-                        .attr('height',             this.height);
-                showCurrentPhoto();
-              });
+            loadAndRenderPhoto(photo, mediaSize);
           }
-
         else
           {
-            debug("media already loaded: %s", imageUrl);
-
-            if (!slideShowVisible)
-              {
-                slideShowVisible = true;
-                $("#slideshow").fadeIn(); 
-                $("#initialWaitingWidget").css({"display" : "none"});
-//                $("#initialWaitingWidget").fadeOut(); FIXME: gets moved up
-              }
-          
-            fitPhoto(photo, activeContainer);
-            animating = true;
-
-            var url = $(photo).attr('url' + mediaSize);
-            $("#image" + activeContainer).attr('src', url);
-
-            $("#divimage" + activeContainer).css(
-              {
-                "display" : "block",
-                "z-index" : --currentZindex
-              });
-
-            showWidget("#loadingWidget", false);            
-            $("#title" + currentContainer).fadeOut();
-            $("#divimage" + currentContainer).fadeOut(function() 
-              {
-                if (bluetteUpdateUrl)
-                  {
-                    location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
-                  }
-                  
-                if (bluetteUpdateTitle)
-                  {
-                    document.title = bluetteTitlePrefix + getCurrentTitle();
-                  }
-                
-                setTimeout(function() 
-                  {
-                    animating = false;
-                    
-                    if (bluetteTitleVisible)
-                      {
-                        $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
-                      }
-
-                    if (playing)
-                      {
-                        scheduleNextSlide(bluetteSlideshowSpeed);
-                      }
-                  }, 500);
-              });
+            renderPhoto(photo, mediaSize);
           }
+      };
+
+    /*******************************************************************************************************************************
+     *
+     *
+     ******************************************************************************************************************************/
+    var loadAndRenderPhoto = function (photo, mediaSize) 
+      {
+        var imageUrl = $(photo).attr('url' + mediaSize);
+        info("loadAndRenderPhoto(%s)", imageUrl);        
+
+        if (!slideShowVisible)
+          {
+            $("#initialWaitingWidget").fadeIn();
+          }
+
+        showWidget("#loadingWidget", bluetteShowProgressIcons);
+
+        var img = $('<img/>'); // FIXME: perhaps this gets lost because it's reloaded
+        img.attr('src', imageUrl);
+        debug("loading %s ...", imageUrl);
+        img.load(function()
+          {
+            debug("media loaded: %s", imageUrl);
+//                $("#image" + activeContainer).attr('src', imageUrl);
+            $(photo).attr('loaded' + mediaSize, true)
+                    .attr('width',              this.width)
+                    .attr('height',             this.height);
+            renderPhoto(photo, mediaSize);
+          });
+      };
+        
+    /*******************************************************************************************************************************
+     *
+     *
+     ******************************************************************************************************************************/
+    var renderPhoto = function (photo, mediaSize) 
+      {
+        var imageUrl = $(photo).attr('url' + mediaSize);
+        info("renderPhoto(%s)", imageUrl);
+        
+        if (!slideShowVisible)
+          {
+            slideShowVisible = true;
+            $("#slideshow").fadeIn(); 
+            $("#initialWaitingWidget").css({"display" : "none"});
+//                $("#initialWaitingWidget").fadeOut(); FIXME: gets moved up
+          }
+
+        fitPhoto(photo, activeContainer);
+        animating = true;
+
+        var url = $(photo).attr('url' + mediaSize);
+        $("#image" + activeContainer).attr('src', url);
+
+        $("#divimage" + activeContainer).css(
+          {
+            "display" : "block",
+            "z-index" : --currentZindex
+          });
+
+        showWidget("#loadingWidget", false);            
+        $("#title" + currentContainer).fadeOut();
+        $("#divimage" + currentContainer).fadeOut(function() 
+          {
+            if (bluetteUpdateUrl)
+              {
+                location.href = baseUrl + "#!/" + photos[currentPhotoIndex].id;        
+              }
+
+            if (bluetteUpdateTitle)
+              {
+                document.title = bluetteTitlePrefix + getCurrentTitle();
+              }
+
+            setTimeout(function() 
+              {
+                animating = false;
+
+                if (bluetteTitleVisible)
+                  {
+                    $("#title" + activeContainer).text(getCurrentTitle()).fadeIn();
+                  }
+
+                if (playing)
+                  {
+                    scheduleNextSlide(bluetteSlideshowSpeed);
+                  }
+              }, 500);
+          });
       };
 
     /*******************************************************************************************************************************
