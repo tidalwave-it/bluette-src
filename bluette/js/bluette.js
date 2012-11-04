@@ -515,11 +515,14 @@ $(document).ready(function()
 
         $("#image" + containerIndex).css(
           { 
-            "left"         : left, 
-            "top"          : top, 
-            "width"        : size.width, 
-            "height"       : size.height, 
-            "border-width" : border 
+            "left"                : left, 
+            "top"                 : top, 
+            "width"               : size.width, 
+            "height"              : size.height, 
+            // background-size: cover would probably do, but does it support HiDPI modes?
+            "background-position" : "0 0",
+            "background-size"     : "" + (size.width * devicePixelRatio) + "px " + (size.height * devicePixelRatio) + "px", 
+            "border-width"        : border 
           });
 
         $("#imageOverlay").css(
@@ -649,13 +652,12 @@ $(document).ready(function()
         fitPhoto(photo, activeContainer);
         animating = true;
 
-        var url = $(photo).attr('url' + mediaSize);
-        $("#image" + activeContainer).attr('src', url);
-
+//        $("#image" + activeContainer).attr('src', imageUrl);
+        $("#image" + activeContainer).css({ "background-image" : "url(" + imageUrl + ")" });          
         $("#divimage" + activeContainer).css(
           {
-            "display" : "block",
-            "z-index" : --currentZindex
+            "display"             : "block",
+            "z-index"             : --currentZindex
           });
 
         showWidget("#loadingWidget", false);            
