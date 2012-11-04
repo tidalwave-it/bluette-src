@@ -47,7 +47,7 @@ $(document).ready(function()
 //    var bluetteCaptionFontSizeScale =   bluetteCaptionFontSizeScale || 25.0 / 1280.0;
 //    var bluetteHeaderFontSizeScale =     bluetteHeaderFontSizeScale || 40 / 1280.0;
 //    var bluetteTitleVisible =                   bluetteTitleVisible || true;
-//    var logging =                                           logging || false;
+//    var bluetteLogging =                             bluetteLogging || false;
 //    bluetteShowProgressIcons = (typeof bluetteShowProgressIcons === 'undefined') ? true : bluetteShowProgressIcons;
 //    bluetteUpdateUrl
 //    bluetteUpdateTitle
@@ -745,7 +745,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     function info (pattern, arg1, arg2, arg3, arg4)
       {
-        if (logging)
+        if (bluetteLogging)
           {
             var d = new Date();
             console.log("%d:%d:%d.%d " + pattern, d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds(), arg1, arg2, arg3, arg4);
@@ -758,7 +758,7 @@ $(document).ready(function()
      ******************************************************************************************************************************/
     function debug (pattern, arg1, arg2, arg3, arg4)
       {
-        if (logging)
+        if (bluetteLogging)
           {
             var d = new Date();
             console.log("%d:%d:%d.%d >>>> " + pattern, d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds(), arg1, arg2, arg3, arg4);
