@@ -13,4 +13,8 @@ var bluetteHeaderFontSizeScale = 40 / 1280.0;
 var bluetteNavigationVisible = true;
 var bluetteTitleVisible = true;
 var bluetteShuffle = false;
-var logging = false;
+var bluetteLogging = true;
+var bluetteShowProgressIcons = true;
+var bluetteUpdateUrl = true;
+var bluetteUpdateTitle = true;
+
